@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<title>PubSubSQL - Go Client API</title>
+
+<meta http-equiv="Content-Type" content="text/html; iso-8859-1" />
+<link href="style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo"><a href="index.html"><img src="images/logo.gif" border="0" alt="Logo" /></a></div>
+		<div id="slogan">An open-source in-memory database integrated with Publish-Subscribe. 1.0.0</div>
+		<div id="social">
+			<a href="#"><img src="images/twitter.png" border="0" alt="Twitter" /></a>
+			<a href="#"><img src="images/youtube.png" border="0" alt="youtube" /></a>
+			<a href="#"><img src="images/git.png" border="0" alt="Git" /></a>			
+		 </div>
+	</div>
+	
+	<div id="containter-content">
+	<div id="inner-content">
+
+		<h1>Go Client API</h1>
+		<pre>import "github.com/pubsubsql/client"</pre>
+
+		<p>PubSubSQL provides unified client API interface for all supported languages. Knowledge on how to use API
+		in Go can be directrly transfered to Java and .Net APIs.</p>
+
+		<h3><a href="#link_install">Install</a></h3>
+		<h3><a href="#link_quick_start">Quick Start Example</a></h3>
+		<h3><a href="#link_client">Client type Reference</a></h3>	
+		<h3>Related Topics:<a href="#">{Java API,&nbsp</a><a href="#">.Net API}</a></h3>
+		
+		<hr/>
+		
+		<h5 id="link_install" class="blue_title">Install</h5>
+		<p>Install Text</p>
+		
+		<h5 id="link_quick_start" class="blue_title">Quick Start Example</h5>
+		<p>Example adglkajsdlgja skljaglsdgjaklsdjg</p>
+		
+		<h5 id="link_client" class="blue_title">Client type Reference</h5>
+		<p>Client is a type that provides interface to PubSubSQL server. We will write more descriptive text later, that is it.</p>
+		<dl>
+			<dt><a href="#Client">type Client</a></dt>
+			<dd><a href="#Client.Connect">func (this *Client) Connect(address string) bool</a></dd>
+			<dd><a href="#Client.Disconnect">func (this *Client) Disconnect()</a></dd>
+			<dd><a href="#Client.Connected">func (this *Client) Connected() bool</a></dd>
+			<dd><a href="#Client.Ok">func (this *Client) Ok() bool</a></dd>
+			<dd><a href="#Client.Failed">func (this *Client) Failed() bool</a></dd>
+			<dd><a href="#Client.Error">func (this *Client) Error() string</a></dd>
+			<dd><a href="#Client.Execute">func (this *Client) Execute(command string) bool</a></dd>
+			<dd><a href="#Client.JSON">func (this *Client) JSON() string</a></dd>
+			<dd><a href="#Client.Action">func (this *Client) Action() string</a></dd>
+			<dd><a href="#Client.PubSubId">func (this *Client) PubSubId() string</a></dd>
+			<dd><a href="#Client.RowCount">func (this *Client) RowCount()</a></dd>
+			<dd><a href="#Client.NextRow">func (this *Client) NextRow() bool</a></dd>
+			<dd><a href="#Client.Value">func (this *Client) Value(column string) string</a></dd>
+			<dd><a href="#Client.ValueByOrdinal">func (this *Client) ValueByOrdinal(ordinal int) string</a></dd>
+			<dd><a href="#Client.HasColumn">func (this *Client) HasColumn(column string) bool</a></dd>
+			<dd><a href="#Client.ColumnCount">func (this *Client) ColumnCount() int</a></dd>
+			<dd><a href="#Client.Columns">func (this *Client) Columns() []string</a></dd>
+			<dd><a href="#Client.WaitForPubSub">func (this *Client) WaitForPubSub(timeout int) bool</a></dd>
+		</dl>
+		
+		<h3 id="Client.Connect">func (*Client) Connect</h3>
+		<pre>func (this *Client) Connect(address string) bool</pre>
+		<p>Connect connects the Client to the pubsubsql server. Address string has the form host:port.</p>
+
+		<h3 id="Client.Disconnect">func (*Client) Disconnect</h3>
+		<pre>func (this *Client) Disconnect()</pre>
+		<p>Disconnect disconnects the Client from the pubsubsql server.</p>
+
+		<h3 id="Client.Connected">func (*Client) Connected</h3>
+		<pre>func (this *Client) Connected() bool</pre>
+		<p>Help Text.</p>
+
+		<h3 id="Client.Ok">func (*Client) Ok</h3>
+		<pre>func (this *Client) Ok() bool</pre>
+		<p>Ok determines if the last command executed against the pubsubsql server succeeded.</p>
+
+		<h3 id="Client.Failed">func (*Client) Failed</h3>
+		<pre>func (this *Client) Failed() bool</pre>
+		<p>Failed determines if the last command executed against the pubsubsql server failed. </p>
+
+		<h3 id="Client.Error">func (*Client) Error</h3>
+		<pre>func (this *Client) Error() string</pre>
+		<p>Error returns an error message when the last command executed against the pubsubsql server fails.</p>
+		<p>Functions that may generate an error are [Connect, Execute, NextRow, WaitForPubSub].</p>
+
+		<h3 id="Client.Execute">func (*Client) Execute</h3>
+		<pre>func (this *Client) Execute(command string) bool</pre>
+		<p>Execute executes a command against the pubsubsql server and returns true on success.</p>
+		<p>The pubsubsql server returns to the Client a response in JSON format.</p>
+
+		<h3 id="Client.JSON">func (*Client) JSON</h3>
+		<pre>func (this *Client) JSON() string</pre>
+		<p>JSON returns a response string in JSON format from the last command executed against 
+		the pubsubsql server.</p>
+
+		<h3 id="Client.Action">func (*Client) Action</h3>
+		<pre>func (this *Client) Action() string</pre>
+		<p>Action returns an action string from the response returned by the last command executed 
+		against the pubsubsql server.</p>
+		<p>Valid actions are [status, insert, select, delete, update, add, remove, subscribe, unsubscribe].</p>
+
+		<h3 id="Client.PubSubId">func (*Client) PubSubId</h3>
+		<pre>func (this *Client) PubSubId() string</pre>
+		<p>PubSubId returns a unique identifier generated by the pubsubsql server when 
+		a Client subscribes to a table. If the client has subscribed to more than  one table,</p>
+		<p>PubSubId should be used by the Client to uniquely identify messages 
+		published by the pubsubsql server.</p>
+
+		<h3 id="Client.RowCount">func (*Client) RowCount</h3>
+		<pre>func (this *Client) RowCount() int</pre>
+		<p>RowCount returns the number of rows in the result set returned by the pubsubsql server.</p>
+
+		<h3 id="Client.NextRow">func (*Client) NextRow</h3>
+		<pre>func (this *Client) NextRow() bool</pre>
+		<p>NextRow is used to move to the next row in the result set returned by the pubsubsql server. 
+		When called for the first time, NextRow moves to the first row in the result set.</p>
+		<p>Returns false when all rows are read or if there is an error.
+		To find out if false was returned because of an error, use Ok or Failed functions. </p>
+
+		<h3 id="Client.Value">func (*Client) Value</h3>
+		<pre>func (this *Client) Value(column string) string</pre>
+		<p>Value returns the value within the current row for the given column name.</p>
+		<p>If the column name does not exist, Value returns an empty string.</p>
+
+		<h3 id="Client.ValueByOrdinal">func (*Client) ValueByOrdinal</h3>
+		<pre>func (this *Client) ValueByOrdinal(ordinal int) string</pre>
+		<p>ValueByOrdinal returns the value within the current row for the given column ordinal.
+		The column ordinal represents the zero based position of the column in the Columns 
+		collection of the result set.</p>
+		<p>If the column ordinal is out of range, ValueByOrdinal returns an empty string.</p>
+
+		<h3 id="Client.HasColumn">func (*Client) HasColumn</h3>
+		<pre>func (this *Client) HasColumn(column string) bool</pre>
+		<p>HasColumn determines if the column name exists in the columns collection of the result set.</p>
+
+		<h3 id="Client.ColumnCount">func (*Client) ColumnCount</h3>
+		<pre>func (this *Client) ColumnCount() int</pre>
+		<p>ColumnCount returns the number of columns in the columns collection of the result set.</p>
+
+		<h3 id="Client.Columns">func (*Client) Columns</h3>
+		<pre>func (this *Client) Columns() []string</pre>
+		<p>Columns returns the column names in the columns collection of the result set.</p>
+
+		<h3 id="Client.WaitForPubSub">func (*Client) WaitForPubSub</h3>
+		<pre>func (this *Client) WaitForPubSub(timeout int) bool</pre>
+		<p>WaitForPubSub waits until the pubsubsql server publishes a message for 
+		the subscribed Client or until the timeout interval elapses.</p>
+		<p>Returns false when timeout interval elapses or if there is and error.</br>
+		To find out if false was returned because of an error, use Ok or Failed functions.</p>		
+
+		<hr/>
+		<hr/>		
+
+
+
+
+
+
+
+	</div>
+			
+
+		<br clear="all" />
+		<div id="license-text">The content of this page is licensed under the Creative Commons Attribution 3.0 License</div>		
+		</div>
+	</div>
+	
+</div>
+		
+</body>
+
+</html>
