@@ -33,8 +33,8 @@
 		in Go can be directrly transfered to Java and .Net APIs.</p>
 
 		<h3><a href="#link_install">Install</a></h3>
-		<h3><a href="#link_quick_start">Quick Start Example</a></h3>
 		<h3><a href="#link_client">Client type Reference</a></h3>	
+		<h3><a href="#link_quick_start">Quick Start Example</a></h3>
 		<h3>Related Topics:<a href="#">{Java API,&nbsp</a><a href="#">.Net API}</a></h3>
 		
 		<hr/>
@@ -42,8 +42,7 @@
 		<h5 id="link_install" class="blue_title">Install</h5>
 		<p>Install Text</p>
 		
-		<h5 id="link_quick_start" class="blue_title">Quick Start Example</h5>
-		<p>Example adglkajsdlgja skljaglsdgjaklsdjg</p>
+		
 		
 		<h5 id="link_client" class="blue_title">Client type Reference</h5>
 		<p>Client is a type that provides interface to PubSubSQL server. We will write more descriptive text later, that is it.</p>
@@ -79,7 +78,7 @@
 
 		<h3 id="Client.Connected">func (*Client) Connected</h3>
 		<pre>func (this *Client) Connected() bool</pre>
-		<p>Help Text.</p>
+		<p>Connected returns true if the Client is currently connected to the pubsubsql server.</p>
 
 		<h3 id="Client.Ok">func (*Client) Ok</h3>
 		<pre>func (this *Client) Ok() bool</pre>
@@ -159,6 +158,169 @@
 		<p>Returns false when timeout interval elapses or if there is and error.</br>
 		To find out if false was returned because of an error, use Ok or Failed functions.</p>		
 
+        <h5 id="link_quick_start" class="blue_title">Quick Start Example</h5>
+
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #0000ff">package</span> main
+
+<span style="color: #0000ff">import</span> (
+	<span style="color: #a31515">&quot;fmt&quot;</span>
+	<span style="color: #a31515">&quot;github.com/pubsubsql/client&quot;</span>
+)
+
+<span style="color: #008000">/* MAKE SURE TO RUN PUBSUBSQL SERVER WHEN RUNNING THE EXAMPLE */</span>
+
+<span style="color: #0000ff">func</span> checkError(client *pubsubsql.Client, str <span style="color: #2b91af">string</span>) {
+	<span style="color: #0000ff">if</span> client.Failed() {
+		fmt.Println(<span style="color: #a31515">&quot;Error:&quot;</span>, client.Error(), str)
+	}	
+}
+
+<span style="color: #0000ff">func</span> main() {
+	client := new(pubsubsql.Client)
+	subscriber := new(pubsubsql.Client)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// CONNECT </span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	address := <span style="color: #a31515">&quot;localhost:7777&quot;</span>	
+	client.Connect(address)
+	checkError(client, <span style="color: #a31515">&quot;client connect failed&quot;</span>)
+	subscriber.Connect(address)	
+	checkError(client, <span style="color: #a31515">&quot;subscriber connect failed&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// INDEX </span>
+	<span style="color: #008000">// only optional ddl commands available are </span>
+	<span style="color: #008000">// key (unique index) and/or tag (non unique index)</span>
+	<span style="color: #008000">// table and columns are auto created</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	
+	<span style="color: #008000">// Creates key (unique index) for table Stocks on column Ticker</span>
+	client.Execute(<span style="color: #a31515">&quot;key Stocks Ticker&quot;</span>)
+	<span style="color: #008000">// Creates tag (non unique index) for table Stocks on column MarketCap</span>
+	client.Execute(<span style="color: #a31515">&quot;tag Stocks MarketCap&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// SUBSCRIBE </span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+			
+	subscriber.Execute(<span style="color: #a31515">&quot;subscribe * from Stocks where MarketCap = &#39;MEGA CAP&#39;&quot;</span>)
+	pubsubid := subscriber.PubSubId()
+	fmt.Println(<span style="color: #a31515">&quot;subscribed to Stocks pubsubid:&quot;</span>, pubsubid)
+	checkError(subscriber, <span style="color: #a31515">&quot;subscribe failed&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH INSERT</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	<span style="color: #008000">// all commands must be in lowercase string single quotes are optional unless</span>
+	<span style="color: #008000">// data contains special characters: whitespace, single quote or comma </span>
+	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (GOOG, &#39;1,200.22&#39;, &#39;MEGA CAP&#39;)&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;insert GOOG failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (MSFT, 38,&#39;MEGA CAP&#39;)&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;insert MSFT failed&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// SELECT </span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	client.Execute(<span style="color: #a31515">&quot;select id, Ticker from Stocks&quot;</span>) 
+	checkError(client, <span style="color: #a31515">&quot;select failed&quot;</span>)
+	<span style="color: #0000ff">for</span> client.NextRow() {
+		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
+		fmt.Printf(<span style="color: #a31515">&quot;id:%s Ticker:%s \n&quot;</span>, client.Value(<span style="color: #a31515">&quot;id&quot;</span>), client.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>))
+	}
+	checkError(client, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+	
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PROCESS PUBLISHED INSERT</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	timeout := 100 
+	<span style="color: #0000ff">for</span> subscriber.WaitForPubSub(timeout) {
+		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
+		fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())		
+		<span style="color: #0000ff">for</span> subscriber.NextRow() {
+			fmt.Println(<span style="color: #a31515">&quot;New MEGA CAP stock:&quot;</span>, subscriber.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>))
+			fmt.Println(<span style="color: #a31515">&quot;Price:&quot;</span>, subscriber.Value(<span style="color: #a31515">&quot;Price&quot;</span>))
+		}	
+		checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+	}	
+	checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH UPDATE</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = &#39;1,500.00&#39; where Ticker = GOOG&quot;</span>) 
+	checkError(client, <span style="color: #a31515">&quot;update GOOG failed&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// DOES NOT PUBLISH INSERT</span>
+	<span style="color: #008000">// we only subscribed to &#39;MEGA CAP&#39;</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (IBM, 168, &#39;LARGE CAP&#39;)&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;insert IBM failed&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH ADD</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 230.45, MarketCap = &#39;MEGA CAP&#39; where Ticker = IBM&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;update IBM to MEGA CAP failed&quot;</span>)
+	
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH REMOVE</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 170, MarketCap = &#39;LARGE CAP&#39; where Ticker = IBM&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;update IBM to LARGE CAP failed&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH DELETE</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	client.Execute(<span style="color: #a31515">&quot;delete from Stocks&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;delete failed&quot;</span>)
+	
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PROCESS PUBLISHED ALL </span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	<span style="color: #0000ff">for</span> subscriber.WaitForPubSub(timeout) {
+		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
+		fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())		
+		<span style="color: #0000ff">for</span> subscriber.NextRow() {
+			<span style="color: #0000ff">for</span> ordinal, column :=  <span style="color: #0000ff">range</span> subscriber.Columns() {
+				fmt.Printf(<span style="color: #a31515">&quot;%s:%s &quot;</span>, column, subscriber.ValueByOrdinal(ordinal))
+			}
+			fmt.Println(<span style="color: #a31515">&quot;&quot;</span>)
+		}	
+		checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+	}	
+	checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// UNSUBSCRIBE </span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	subscriber.Execute(<span style="color: #a31515">&quot;unsubscribe from Stocks&quot;</span>)
+	checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+	
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// DISCONNECT </span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+	client.Disconnect()
+	subscriber.Disconnect()
+}
+</pre></div>
+
+
+
+
 		<hr/>
 		<hr/>		
 
@@ -174,10 +336,8 @@
 		<br clear="all" />
 		<div id="license-text">The content of this page is licensed under the Creative Commons Attribution 3.0 License</div>		
 		</div>
-	</div>
-	
 </div>
-		
+	
 </body>
 
 </html>
