@@ -236,7 +236,10 @@ p
 
 #inner-content H2{font-size:20px;}
 
-#inner-content H3{font-size: 16px;}
+#inner-content H3{
+    font-size: 16px;
+    margin:3px 20px;    
+}
 
 #inner-content H5{font-size:20px;}
 
