@@ -27,76 +27,88 @@
    <br/>
    <pre>We are new, please ask us a question twitt <a href="https://twitter.com/PubSubSQL">@PubSubSQL</a> or email <a href="mailto:oleg@pubsubsql.com">oleg@pubsubsql.com</a> </pre>
     <h1>Getting Started on Linux</h1>
-<pre>System requirements: Linux 2.6.23 or later
-Processor Architecture: x86 64-bit(amd64) 32-bit(386) 
+<pre># PubSubSQL distribution tree
+
+pubsubsql/
+    bin/
+        pubsubsql           # server and built-in cli
+        pubsubsqlsvc        # daemon (service) installer
+        pubsubgui.jar       # interactive query java gui
+    lib/
+        pubsubsql.jar       # java client api
+        gson-2.4.1.jar      # gson java json parser
+    samples/                # sources for samples and client api 
+        go/...                   
+        java/...
 </pre>
 
-    <h3><a href="#download">Download and Install PubSubSQL</a></h3>
-    <h3><a href="#runcmd">Run PubSubSQL server from the command line</a></h3>	
-    <h3><a href="#runservice">Install and run PubSubSQL server as a service</a></h3>	
-    <h3><a href="#runcli">Run PubSubSQL client from the command line</a></h3>	
-    <h3><a href="#rungui">Run PubSubSQL Interactive Query gui client</a></h3>	
+    <h3><a href="#download">Download and install the distribution</a></h3>
+    <h3><a href="#test">Test your installation</a></h3>
+    <h3><a href="#daemon">Configure and run as a daemon (service)</a></h3>
+    <h3><a href="#gui">Run Interactive Query gui</a></h3>
 
-    <h5 id="download" class="blue_title">Download and Install PubSubSQL</h5>
-    <p>PubSubSQL 64-bit distribution <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-linux-amd64.tar.gz</a></p>
-    <p>PubSubSQL 32-bit distribution <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-linux-386.tar.gz</a></p>
+    <h5 id="download" class="blue_title">Download and install the distribution</h5>
+    <p>PubSubSQL x86 64-bit distribution: <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-linux-x64.tar.gz</a></p>
+    <p>PubSubSQL x86 32-bit distribution: <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-linux-x86.tar.gz</a></p>
     <p>Download one of the above archives and extract it into /usr/local, creating a PubSubSQL tree in /usr/local/pubsubsql. For example: </p>
     <pre>$ sudo tar -C /usr/local -xzf pubsubsql-v1.0.0-linux-amd64.tar.gz </pre>   
-    <p>To be able to run server and client from the command line without changing to pubsubsql/bin directory add 
-    /usr/local/pubsubsql/bin to the PATH environment variable. Do this by adding this line to the end of your $HOME/.bashrc file:</p>
-    <pre>export PATH=$PATH:/usr/local/pubsubsql/bin</pre>   
-    <p>Make sure to restart your terminal for change to the PATH to take effect.</p>
+    <p>To be able to run the server and the CLI from the command line without changing to the /usr/local/ubsubsql/bin directory, add 
+    /usr/local/pubsubsql/bin to the PATH environment variable. For example, you can do this by adding the following line to the end of your ~/.bashrc file:</p>
+    <pre># add to the end of ~/.bashrc file
+export PATH=$PATH:/usr/local/pubsubsql/bin</pre>   
+    <p>Run the following command for the changes to PATH to take effect:</p>
+    <pre>$ source ~/.bashrc</pre>   
 
-    <h5 id="runcmd" class="blue_title">Run PubSubSQL server from the command line</h5>
+    <h5 id="test" class="blue_title">Test your installation</h5>
+    <p>Run the server:</p>
 <pre>$ pubsubsql
 info: 2014/02/11 18:00:00 started
 </pre>
-    <p>To quit type letter q and press enter.</p>
+    <p>Quit the server by typing the letter q and press enter.</p>
 <pre>q
-info: 2014/02/11 18:01:00 stoped
+info: 2014/02/11 18:01:00 stopped
 </pre>
 
-    <p>By default PubSubSQL server listens on all available network interfaces and binds to the default port:7777. 
-    To start PubSubSQL server listening on host port specify -port and/or -ip options. For example:</p>
+    <p>By default, the server listens for incoming connections on all available network interfaces and binds to the default port:7777. 
+    You may choose to specify a different port or host by using the -port and/or -ip options. For example:</p>
 <pre>$ pubsubsql -port=1234 -ip=192.168.1.1
 info: 2014/02/11 18:01:00 started
 </pre>
 
-    <h5 id="runservice" class="blue_title">Intall and run PubSubSQL server as a service</h5>
-    <p>If you want to deploy PubSubSQL server you should run the server as a linux service. Install PubSubSQL server as a service using service installer included in the distribution.
-    Same -ip and -port options can be specified when installing the service. The service installer must be run as root or through sudo.
-    </p>
-
-    <p>To install the service:</p>
-    <pre>$ cd /usr/local/pubsubsql/bin 
-$ sudo ./pubsubsqlsvc install
-    </pre>
-
-    <p>To uninstall the service:</p>
-    <pre>$ cd /usr/local/pubsubsql/bin 
-$ sudo ./pubsubsqlsvc uninstall
-    </pre>
-
-    <p>To start the service:</p>
-    <pre>$ service pubsubsqld start </pre>
-
-    <p>To stop the service:</p>
-    <pre>$ service pubsubsqld stop </pre>
-
-    <p>When ran as a service all output is redirected to syslog.</p>
-
-    <h5 id="runcli" class="blue_title">Run PubSubSQL client from the command line</h5>
-    <p>Built in command line utility (cli) is provided that ca be used to send commands to PubSubSQL server. Run cli and send status command to the server:</p> 
+    <p>CLI, the Command Line utility, is built into the pubsubsql executable. It can be used to send commands to the server. Run CLI and send a status command to the server:</p> 
 <pre>$ pubsubsql cli
 pubsubsql>status
 {"status":"ok","action":"status","connections":1}
 pubsubsql>
 </pre>
+
+    <h5 id="daemon" class="blue_title">Configure and run as a daemon (service)</h5>
+    <p>If you want to deploy the PubSubSQL server, you should run the server as a linux daemon (service). Install the server as a service using the service installer included in the distribution.
+    The same -ip and -port options can be specified when installing the service. <strong>The service installer must be run as root or through sudo.</strong>
+    </p>
+
+    <p>Install the service:</p>
+    <pre>$ cd /usr/local/pubsubsql/bin 
+$ sudo ./pubsubsqlsvc install
+    </pre>
+
+    <p>Uninstall the service:</p>
+    <pre>$ cd /usr/local/pubsubsql/bin 
+$ sudo ./pubsubsqlsvc uninstall
+    </pre>
+
+    <p>Start the service:</p>
+    <pre>$ service pubsubsqld start </pre>
+
+    <p>Stop the service:</p>
+    <pre>$ service pubsubsqld stop </pre>
+
+    <p><strong>When the server is run as a service, the output is redirected to syslog.</strong></p>
     
-    <h5 id="rungui" class="blue_title">Run PubSubSQL Interactive Query gui client</h5>	
-    <p>PubSubSQL Interactive Query java gui client is provided that can be used to send command to PubSubSQL server. 
-    It displays the results in the grid view. </p>
-    <p>To run the gui: </p>
+    <h5 id="gui" class="blue_title">Run PubSubSQL Interactive Query gui client</h5>	
+    <p>The PubSubSQL Interactive Query gui is provided to be used to send commands to the PubSubSQL server. 
+    It displays the results in a grid view as shown below. </p>
+    <p>Run the gui: </p>
     <pre>$ java -jar /usr/local/pubsubsql/bin/pubsubsqlgui.jar</pre>
 
     <div><img border="0" src="images/javagui.png" alt="GUI"/></div>
