@@ -22,7 +22,7 @@
 	<div id="containter-content">
 	<div id="inner-content">
 		<br/>
-		<pre>We are new, please ask us a question twitt <a href="https://twitter.com/PubSubSQL">@PubSubSQL</a> or email <a href="mailto:oleg@pubsubsql.com">oleg@pubsubsql.com</a></pre>
+		<pre>Please ask us a question: twitt <a href="https://twitter.com/PubSubSQL">@PubSubSQL</a> or email <a href="mailto:oleg@pubsubsql.com">oleg@pubsubsql.com</a></pre>
 
 		<h1>Go Client API</h1>
 
@@ -40,8 +40,7 @@ func main() {
     }
 } </pre>
 
-		<p>PubSubSQL provides unified client API interface for all supported languages. Knowledge on how to use API
-		in Go can be directrly transfered to Java and .Net APIs.</p>
+		<p>PubSubSQL provides a unified client API with the same look and feel for all supported languages.</p>
 
 		<h3><a href="#install">Install</a></h3>
 		<h3><a href="#link_client">Client type Reference</a></h3>	
@@ -50,18 +49,18 @@ func main() {
 		<hr/>
 		
 		<h5 id="install" class="blue_title">Install</h5>
-		<p>In order to use Go Client API you must first configure it in your Go workspace using go get tool. 
+		<p>In order to use the Go Client API, you must first configure it in your Go workspace using the "go get" command. 
            The GOPATH environment variable specifies the location of your workspace.
 		</p>
-        <pre>go get github.com/pubsubsql/client
-go get github.com/pubsubsql/samples
+        <pre>$ go get github.com/pubsubsql/client
+$ go get github.com/pubsubsql/samples
         </pre>
-        <p>As an alternative you may copy API sources manually and use go install tool. 
-        API sources are part of the download and are located in DOWNLOAD_DIR/pubsubsql/samples/go directory.</p>
+        <p>As an alternative you may copy the Go Client API sources manually. 
+        The sources are part of the downloaded distribution and are located in a directory called DOWNLOAD_DIR/pubsubsql/samples/go/src .</p>
 		
 		
 		<h5 id="link_client" class="blue_title">Client type Reference</h5>
-		<p>Client is a type that provides interface to PubSubSQL server. We will write more descriptive text later, that is it.</p>
+		<p>Client is a type that provides an interface to the PubSubSQL server. It can be used to send commands to and receive pubsub notifications from the server.</p>
 		<dl>
 			<dt><a href="#Client">type Client</a></dt>
 			<dd><a href="#Client.Connect">func (this *Client) Connect(address string) bool</a></dd>
@@ -158,7 +157,7 @@ go get github.com/pubsubsql/samples
 
         <h5 id="link_quick_start" class="blue_title">Quick Start Example</h5>
 
-        <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #0000ff">package</span> main
+    <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #0000ff">package</span> main
 
 <span style="color: #0000ff">import</span> (
 	<span style="color: #a31515">&quot;fmt&quot;</span>
@@ -170,7 +169,7 @@ go get github.com/pubsubsql/samples
 <span style="color: #0000ff">func</span> checkError(client *pubsubsql.Client, str <span style="color: #2b91af">string</span>) {
 	<span style="color: #0000ff">if</span> client.Failed() {
 		fmt.Println(<span style="color: #a31515">&quot;Error:&quot;</span>, client.Error(), str)
-	}	
+	}
 }
 
 <span style="color: #0000ff">func</span> main() {
@@ -178,31 +177,48 @@ go get github.com/pubsubsql/samples
 	subscriber := new(pubsubsql.Client)
 
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	<span style="color: #008000">// CONNECT </span>
+	<span style="color: #008000">// CONNECT</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-	address := <span style="color: #a31515">&quot;localhost:7777&quot;</span>	
+	address := <span style="color: #a31515">&quot;localhost:7777&quot;</span>
 	client.Connect(address)
 	checkError(client, <span style="color: #a31515">&quot;client connect failed&quot;</span>)
-	subscriber.Connect(address)	
+	subscriber.Connect(address)
 	checkError(client, <span style="color: #a31515">&quot;subscriber connect failed&quot;</span>)
 
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	<span style="color: #008000">// INDEX </span>
-	<span style="color: #008000">// only optional ddl commands available are </span>
-	<span style="color: #008000">// key (unique index) and/or tag (non unique index)</span>
-	<span style="color: #008000">// table and columns are auto created</span>
+	<span style="color: #008000">// SQL MUST-KNOW RULES</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// All commands must be in lower case.</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// Identifiers can only begin with alphabetic characters and may contain any alphanumeric characters.</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// The only available (but optional) data definition commands are</span>
+	<span style="color: #008000">//    key (unique index)      - key table_name column_name</span>
+	<span style="color: #008000">//    tag (non-unique index)  - tag table_name column_name</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// Tables and columns are auto-created when accessed.</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// The underlying data type for all columns is string.</span>
+	<span style="color: #008000">// Strings do not have to be enclosed in single quotes as long as they have no special characters.</span>
+	<span style="color: #008000">// The special characters are</span>
+	<span style="color: #008000">//    , - comma</span>
+	<span style="color: #008000">//      - white space characters (space, tab, new line)</span>
+	<span style="color: #008000">//    ) - right parenthesis</span>
+	<span style="color: #008000">//    &#39; - single quote</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	
-	<span style="color: #008000">// Creates key (unique index) for table Stocks on column Ticker</span>
+
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// INDEX</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
 	client.Execute(<span style="color: #a31515">&quot;key Stocks Ticker&quot;</span>)
-	<span style="color: #008000">// Creates tag (non unique index) for table Stocks on column MarketCap</span>
 	client.Execute(<span style="color: #a31515">&quot;tag Stocks MarketCap&quot;</span>)
 
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	<span style="color: #008000">// SUBSCRIBE </span>
+	<span style="color: #008000">// SUBSCRIBE</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-			
+
 	subscriber.Execute(<span style="color: #a31515">&quot;subscribe * from Stocks where MarketCap = &#39;MEGA CAP&#39;&quot;</span>)
 	pubsubid := subscriber.PubSubId()
 	fmt.Println(<span style="color: #a31515">&quot;subscribed to Stocks pubsubid:&quot;</span>, pubsubid)
@@ -212,51 +228,48 @@ go get github.com/pubsubsql/samples
 	<span style="color: #008000">// PUBLISH INSERT</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-	<span style="color: #008000">// all commands must be in lowercase string single quotes are optional unless</span>
-	<span style="color: #008000">// data contains special characters: whitespace, single quote or comma </span>
 	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (GOOG, &#39;1,200.22&#39;, &#39;MEGA CAP&#39;)&quot;</span>)
 	checkError(client, <span style="color: #a31515">&quot;insert GOOG failed&quot;</span>)
 	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (MSFT, 38,&#39;MEGA CAP&#39;)&quot;</span>)
 	checkError(client, <span style="color: #a31515">&quot;insert MSFT failed&quot;</span>)
 
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	<span style="color: #008000">// SELECT </span>
+	<span style="color: #008000">// SELECT</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-	client.Execute(<span style="color: #a31515">&quot;select id, Ticker from Stocks&quot;</span>) 
+	client.Execute(<span style="color: #a31515">&quot;select id, Ticker from Stocks&quot;</span>)
 	checkError(client, <span style="color: #a31515">&quot;select failed&quot;</span>)
 	<span style="color: #0000ff">for</span> client.NextRow() {
 		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
 		fmt.Printf(<span style="color: #a31515">&quot;id:%s Ticker:%s \n&quot;</span>, client.Value(<span style="color: #a31515">&quot;id&quot;</span>), client.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>))
 	}
 	checkError(client, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
-	
+
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 	<span style="color: #008000">// PROCESS PUBLISHED INSERT</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-	timeout := 100 
+	timeout := 100
 	<span style="color: #0000ff">for</span> subscriber.WaitForPubSub(timeout) {
 		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
-		fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())		
+		fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())
 		<span style="color: #0000ff">for</span> subscriber.NextRow() {
 			fmt.Println(<span style="color: #a31515">&quot;New MEGA CAP stock:&quot;</span>, subscriber.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>))
 			fmt.Println(<span style="color: #a31515">&quot;Price:&quot;</span>, subscriber.Value(<span style="color: #a31515">&quot;Price&quot;</span>))
-		}	
+		}
 		checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
-	}	
+	}
 	checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>)
 
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 	<span style="color: #008000">// PUBLISH UPDATE</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = &#39;1,500.00&#39; where Ticker = GOOG&quot;</span>) 
+	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = &#39;1,500.00&#39; where Ticker = GOOG&quot;</span>)
 	checkError(client, <span style="color: #a31515">&quot;update GOOG failed&quot;</span>)
 
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	<span style="color: #008000">// DOES NOT PUBLISH INSERT</span>
-	<span style="color: #008000">// we only subscribed to &#39;MEGA CAP&#39;</span>
+	<span style="color: #008000">// SERVER WILL NOT PUBLISH INSERT BECAUSE WE ONLY SUBSCRIBED TO &#39;MEGA CAP&#39;</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
 	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (IBM, 168, &#39;LARGE CAP&#39;)&quot;</span>)
@@ -268,7 +281,7 @@ go get github.com/pubsubsql/samples
 
 	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 230.45, MarketCap = &#39;MEGA CAP&#39; where Ticker = IBM&quot;</span>)
 	checkError(client, <span style="color: #a31515">&quot;update IBM to MEGA CAP failed&quot;</span>)
-	
+
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 	<span style="color: #008000">// PUBLISH REMOVE</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
@@ -282,39 +295,41 @@ go get github.com/pubsubsql/samples
 
 	client.Execute(<span style="color: #a31515">&quot;delete from Stocks&quot;</span>)
 	checkError(client, <span style="color: #a31515">&quot;delete failed&quot;</span>)
-	
+
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	<span style="color: #008000">// PROCESS PUBLISHED ALL </span>
+	<span style="color: #008000">// PROCESS ALL PUBLISHED</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
 	<span style="color: #0000ff">for</span> subscriber.WaitForPubSub(timeout) {
 		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
-		fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())		
+		fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())
 		<span style="color: #0000ff">for</span> subscriber.NextRow() {
-			<span style="color: #0000ff">for</span> ordinal, column :=  <span style="color: #0000ff">range</span> subscriber.Columns() {
+			<span style="color: #0000ff">for</span> ordinal, column := <span style="color: #0000ff">range</span> subscriber.Columns() {
 				fmt.Printf(<span style="color: #a31515">&quot;%s:%s &quot;</span>, column, subscriber.ValueByOrdinal(ordinal))
 			}
 			fmt.Println(<span style="color: #a31515">&quot;&quot;</span>)
-		}	
+		}
 		checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
-	}	
+	}
 	checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>)
 
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	<span style="color: #008000">// UNSUBSCRIBE </span>
+	<span style="color: #008000">// UNSUBSCRIBE</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
 	subscriber.Execute(<span style="color: #a31515">&quot;unsubscribe from Stocks&quot;</span>)
 	checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
-	
+
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-	<span style="color: #008000">// DISCONNECT </span>
+	<span style="color: #008000">// DISCONNECT</span>
 	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
 	client.Disconnect()
 	subscriber.Disconnect()
 }
 </pre></div>
+
+
 
 
 	</div>
