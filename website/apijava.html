@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>PubSubSQL - Java Client API</title>
+<meta http-equiv="Content-Type" content="text/html; iso-8859-1" />
+<link href="style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo"><a href="index.html"><img src="images/logo.gif" border="0" alt="Logo" /></a></div>
+		<div id="slogan">An open-source in-memory database integrated with Publish-Subscribe - Version 1.0.0</div>
+		<div id="social">
+			<a href="#"><img src="images/twitter.png" border="0" alt="Twitter" /></a>
+			<a href="#"><img src="images/youtube.png" border="0" alt="youtube" /></a>
+			<a href="#"><img src="images/git.png" border="0" alt="Git" /></a>			
+		 </div>
+	</div>
+    <div id="hmenu">
+		<ul id="main-menu">
+			<li class="first"><a href='#'>Download</a>
+				<ul class="drop-down">
+					<li><a href="#">Linux 64-bit (x86)</a></li>
+					<li><a href="#">Windows 64-bit (x86)</a></li>
+					<li><a href="#">Linux 32-bit (x86)</a></li>
+					<li><a href="#">Windows 32-bit (x86)</a></li>
+				</ul>
+            </li>
+            <li><a href="#">How To</a>
+				<ul class='drop-down'>
+					<li><a href="runlinux.html">run on Linux</a></li>
+					<li><a href="#">run on Windows</a></li>
+				</ul>
+			</li>
+			<li><a href="#">API</a>
+				<ul class="drop-down">
+					<li><a href="apigo.html">Go</a></li>
+					<li><a href="apijava.html">Java</a></li>
+					<li><a href="apidotnet.html">.Net</a></li>
+				</ul>
+			</li>
+			<li><a href="#">SQL</a>
+				<ul class='drop-down'>
+					<li><a href="#">SQL must-know rules</a></li>
+					<li><a href="#">subscribe</a></li>
+					<li><a href="#">subscribe skip</a></li>
+					<li><a href="#">unsubscribe</a></li>
+					<li><a href="#">key</a></li>
+					<li><a href="#">tag</a></li>
+				</ul>
+			</li>
+			<li class="last-child"><a href="#">More</a>
+				<ul class='drop-down'>
+					<li><a href="license.html">License</a></li>
+					<li><a href="community.html">Community</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>	
+	<div id="containter-content">
+	<div id="inner-content">
+		<br/>
+		<pre>Please ask us a question: email <a href="mailto:oleg@pubsubsql.com">oleg@pubsubsql.com</a> twitter <a href="https://twitter.com/PubSubSQL">@PubSubSQL</a> forum <a href="http://groups.google.com/group/pubsubsql">groups.google.com/group/pubsubsql</a> </pre>
+
+		<h1>Java Client API</h1>
+
+<pre>import pubsubsql.Client;
+
+public class Sample {
+    public static void main(String[] args) {
+        pubsubsql.Client client = new pubsubsql.Client();
+        if (client.Connect(("localhost:7777"))) {
+            System.out.println("Hello PubSubSQL");
+        }
+    }
+} </pre>
+
+		<p>PubSubSQL provides a unified client API with the same look and feel for all supported languages.</p>
+
+		<h3><a href="#install">Install</a></h3>
+		<h3><a href="#link_client">Client class reference</a></h3>	
+		<h3><a href="#link_quick_start">Quick Start example</a></h3>
+		
+		<hr/>
+		
+		<h5 id="install" class="blue_title">Install</h5>
+        <p>The PubSubSQL Java Client API is a Java library, it was compiled with JDK Version 1.7 and is using Gson Java library.</p>
+
+		<p>In order to use the library, you must add <strong>pubsubsql.jar</strong> and <strong>gson-2.2.4.jar</strong> to your project.
+        Both jars are part of the download distribution and can be found at <strong>DOWNLOAD_DIR\pubsubsql\lib\</strong></p>
+
+        <p>As an alternative you may build the library yourself by running the build script located at DOWNLOAD_DIR\pubsubsql\samples\Java\src\Client.
+        The Gson Java library is located at <a href="https://code.google.com/p/google-gson">https://code.google.com/p/google-gson</a></p>
+
+		<h5 id="link_client" class="blue_title">Client class reference</h5>
+		<p>Client class provides an interface to the PubSubSQL server. It can be used to send commands to and receive pubsub notifications from the server.</p>
+		<dl>
+			<dt><a href="#Client">class Client</a></dt>
+			<dd><a href="#Client.Connect">public boolean Connect(String address)</a></dd>
+			<dd><a href="#Client.Disconnect">public void Disconnect()</a></dd>
+			<dd><a href="#Client.Connected">public boolean Connected()</a></dd>
+			<dd><a href="#Client.Ok">public boolean Ok()</a></dd>
+			<dd><a href="#Client.Failed">public boolean Failed()</a></dd>
+			<dd><a href="#Client.Error">public String Error()</a></dd>
+			<dd><a href="#Client.Execute">public boolean Execute(String command)</a></dd>
+			<dd><a href="#Client.JSON">public String JSON()</a></dd>
+			<dd><a href="#Client.Action">public String Action()</a></dd>
+			<dd><a href="#Client.PubSubId">public String PubSubId()</a></dd>
+			<dd><a href="#Client.RowCount">public int RowCount()</a></dd>
+			<dd><a href="#Client.NextRow">public boolean NextRow()</a></dd>
+			<dd><a href="#Client.Value">public String Value(String column)</a></dd>
+			<dd><a href="#Client.ValueByOrdinal">public String ValueByOrdinal(int ordinal)</a></dd>
+			<dd><a href="#Client.HasColumn">public boolean HasColumn(String column)</a></dd>
+			<dd><a href="#Client.ColumnCount">public int ColumnCount()</a></dd>
+			<dd><a href="#Client.Columns">public Iterable&lt;String&gt; Columns()</a></dd>
+			<dd><a href="#Client.WaitForPubSub">public boolean WaitForPubSub(int timeout)</a></dd>
+		</dl>
+		
+		<pre id="Client.Connect">public boolean Connect(String address)</pre>
+		<p>Connect connects the Client to the pubsubsql server. Address String has the form host:port.</p>
+
+		<pre id="Client.Disconnect">public void Disconnect()</pre>
+		<p>Disconnect disconnects the Client from the pubsubsql server.</p>
+
+		<pre id="Client.Connected">public boolean Connected()</pre>
+		<p>Connected returns true if the Client is currently connected to the pubsubsql server.</p>
+
+		<pre id="Client.Ok">public boolean Ok()</pre>
+		<p>Ok determines if the last command executed against the pubsubsql server succeeded.</p>
+
+		<pre id="Client.Failed">public boolean Failed()</pre>
+		<p>Failed determines if the last command executed against the pubsubsql server failed. </p>
+
+		<pre id="Client.Error">public String Error()</pre>
+		<p>Error returns an error message when the last command executed against the pubsubsql server fails.</p>
+		<p>Functions that may generate an error are [Connect, Execute, NextRow, WaitForPubSub].</p>
+
+		<pre id="Client.Execute">public boolean Execute(String command)</pre>
+		<p>Execute executes a command against the pubsubsql server and returns true on success.</p>
+		<p>The pubsubsql server returns to the Client a response in JSON format.</p>
+
+		<pre id="Client.JSON">public String JSON()</pre>
+		<p>JSON returns a response String in JSON format from the last command executed against 
+		the pubsubsql server.</p>
+
+		<pre id="Client.Action">public String Action()</pre>
+		<p>Action returns an action String from the response returned by the last command executed 
+		against the pubsubsql server.</p>
+		<p>Valid actions are [status, insert, select, delete, update, add, remove, subscribe, unsubscribe].</p>
+
+		<pre id="Client.PubSubId">public String PubSubId()</pre>
+		<p>PubSubId returns a unique identifier generated by the pubsubsql server when 
+		a Client subscribes to a table. If the client has subscribed to more than  one table,</p>
+		<p>PubSubId should be used by the Client to uniquely identify messages 
+		published by the pubsubsql server.</p>
+
+		<pre id="Client.RowCount">public int RowCount()</pre>
+		<p>RowCount returns the number of rows in the result set returned by the pubsubsql server.</p>
+
+		<pre id="Client.NextRow">public boolean NextRow()</pre>
+		<p>NextRow is used to move to the next row in the result set returned by the pubsubsql server. 
+		When called for the first time, NextRow moves to the first row in the result set.</p>
+		<p>Returns false when all rows are read or if there is an error.
+		To find out if false was returned because of an error, use Ok or Failed functions. </p>
+
+		<pre id="Client.Value">public String Value(String column)</pre>
+		<p>Value returns the value within the current row for the given column name.</p>
+		<p>If the column name does not exist, Value returns an empty String.</p>
+
+		<pre id="Client.ValueByOrdinal">public String ValueByOrdinal(int ordinal)</pre>
+		<p>ValueByOrdinal returns the value within the current row for the given column ordinal.
+		The column ordinal represents the zero based position of the column in the Columns 
+		collection of the result set.</p>
+		<p>If the column ordinal is out of range, ValueByOrdinal returns an empty String.</p>
+
+		<pre id="Client.HasColumn">public boolean HasColumn(String column)</pre>
+		<p>HasColumn determines if the column name exists in the columns collection of the result set.</p>
+
+		<pre id="Client.ColumnCount">public int ColumnCount()</pre>
+		<p>ColumnCount returns the number of columns in the columns collection of the result set.</p>
+
+		<pre id="Client.Columns">public IEnumerable&lt;String&gt; Columns()</pre>
+		<p>Columns returns the column names in the columns collection of the result set.</p>
+
+		<pre id="Client.WaitForPubSub">public boolean WaitForPubSub(int timeout)</pre>
+		<p>WaitForPubSub waits until the pubsubsql server publishes a message for 
+		the subscribed Client or until the timeout interval elapses.</p>
+		<p>Returns false when timeout interval elapses or if there is an error.</br>
+		To find out if false was returned because of an error, use Ok or Failed functions.</p>		
+
+        <h5 id="link_quick_start" class="blue_title">Quick Start Example</h5>
+
+      <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #0000ff">import</span> pubsubsql.Client;
+<span style="color: #0000ff">import</span> java.util.*;
+
+<span style="color: #008000">/* MAKE SURE TO RUN PUBSUBSQL SERVER WHEN RUNNING THE EXAMPLE */</span>
+
+<span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> <span style="color: #2b91af">QuickStart</span> {
+
+    <span style="color: #0000ff">static</span> <span style="color: #2b91af">void</span> checkError(pubsubsql.Client client, String str) {
+        <span style="color: #0000ff">if</span> (client.Failed()) {
+            System.out.println(String.format(<span style="color: #a31515">&quot;Error: %s %s&quot;</span>, client.Error(), str));
+        }
+    }
+
+    <span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #2b91af">void</span> main(String[] args) {
+        pubsubsql.Client client = <span style="color: #0000ff">new</span> pubsubsql.Client();
+        pubsubsql.Client subscriber = <span style="color: #0000ff">new</span> pubsubsql.Client();
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// CONNECT</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        String address = <span style="color: #a31515">&quot;localhost:7777&quot;</span>;
+        client.Connect(address);
+        checkError(client, <span style="color: #a31515">&quot;client connect failed&quot;</span>);
+        subscriber.Connect(address);
+        checkError(client, <span style="color: #a31515">&quot;subscriber connect failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// SQL MUST-KNOW RULES</span>
+        <span style="color: #008000">//</span>
+        <span style="color: #008000">// All commands must be in lower case.</span>
+        <span style="color: #008000">//</span>
+        <span style="color: #008000">// Identifiers can only begin with alphabetic characters and may contain any alphanumeric characters.</span>
+        <span style="color: #008000">//</span>
+        <span style="color: #008000">// The only available (but optional) data definition commands are</span>
+        <span style="color: #008000">//    key (unique index)      - key table_name column_name</span>
+        <span style="color: #008000">//    tag (non-unique index)  - tag table_name column_name</span>
+        <span style="color: #008000">//</span>
+        <span style="color: #008000">// Tables and columns are auto-created when accessed.</span>
+        <span style="color: #008000">//</span>
+        <span style="color: #008000">// The underlying data type for all columns is String.</span>
+        <span style="color: #008000">// Strings do not have to be enclosed in single quotes as long as they have no special characters.</span>
+        <span style="color: #008000">// The special characters are</span>
+        <span style="color: #008000">//    , - comma</span>
+        <span style="color: #008000">//      - white space characters (space, tab, new line)</span>
+        <span style="color: #008000">//    ) - right parenthesis</span>
+        <span style="color: #008000">//    &#39; - single quote</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// INDEX</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Execute(<span style="color: #a31515">&quot;key Stocks Ticker&quot;</span>);
+        client.Execute(<span style="color: #a31515">&quot;tag Stocks MarketCap&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// SUBSCRIBE</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        subscriber.Execute(<span style="color: #a31515">&quot;subscribe * from Stocks where MarketCap = &#39;MEGA CAP&#39;&quot;</span>);
+        String pubsubid = subscriber.PubSubId();
+        System.out.println(<span style="color: #a31515">&quot;subscribed to Stocks pubsubid: &quot;</span> + pubsubid);
+        checkError(subscriber, <span style="color: #a31515">&quot;subscribe failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// PUBLISH INSERT</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (GOOG, &#39;1,200.22&#39;, &#39;MEGA CAP&#39;)&quot;</span>);
+        checkError(client, <span style="color: #a31515">&quot;insert GOOG failed&quot;</span>);
+        client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (MSFT, 38,&#39;MEGA CAP&#39;)&quot;</span>);
+        checkError(client, <span style="color: #a31515">&quot;insert MSFT failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// SELECT</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Execute(<span style="color: #a31515">&quot;select id, Ticker from Stocks&quot;</span>);
+        checkError(client, <span style="color: #a31515">&quot;select failed&quot;</span>);
+        <span style="color: #0000ff">while</span> (client.NextRow()) {
+            System.out.println(<span style="color: #a31515">&quot;*********************************&quot;</span>);
+            System.out.println(String.format(<span style="color: #a31515">&quot;id:%s Ticker:%s \n&quot;</span>, client.Value(<span style="color: #a31515">&quot;id&quot;</span>), client.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>)));
+        }
+        checkError(client, <span style="color: #a31515">&quot;NextRow failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// PROCESS PUBLISHED INSERT</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        
+        <span style="color: #2b91af">int</span> timeout = 100;
+        <span style="color: #0000ff">while</span> (subscriber.WaitForPubSub(timeout)) {
+            System.out.println(<span style="color: #a31515">&quot;*********************************&quot;</span>);
+            System.out.println(<span style="color: #a31515">&quot;Action:&quot;</span> + subscriber.Action());
+            <span style="color: #0000ff">while</span> (subscriber.NextRow()) {
+                System.out.println(<span style="color: #a31515">&quot;New MEGA CAP stock:&quot;</span> + subscriber.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>));
+                System.out.println(<span style="color: #a31515">&quot;Price:&quot;</span> + subscriber.Value(<span style="color: #a31515">&quot;Price&quot;</span>));
+            }
+            checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>);
+        }
+        checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// PUBLISH UPDATE</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = &#39;1,500.00&#39; where Ticker = GOOG&quot;</span>);
+        checkError(client, <span style="color: #a31515">&quot;update GOOG failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// SERVER WILL NOT PUBLISH INSERT BECAUSE WE ONLY SUBSCRIBED TO &#39;MEGA CAP&#39;</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (IBM, 168, &#39;LARGE CAP&#39;)&quot;</span>);
+        checkError(client, <span style="color: #a31515">&quot;insert IBM failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// PUBLISH ADD</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 230.45, MarketCap = &#39;MEGA CAP&#39; where Ticker = IBM&quot;</span>);
+        checkError(client, <span style="color: #a31515">&quot;update IBM to MEGA CAP failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// PUBLISH REMOVE</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 170, MarketCap = &#39;LARGE CAP&#39; where Ticker = IBM&quot;</span>);
+        checkError(client, <span style="color: #a31515">&quot;update IBM to LARGE CAP failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// PUBLISH DELETE</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Execute(<span style="color: #a31515">&quot;delete from Stocks&quot;</span>);
+        checkError(client, <span style="color: #a31515">&quot;delete failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// PROCESS ALL PUBLISHED</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        <span style="color: #0000ff">while</span> (subscriber.WaitForPubSub(timeout)) {
+            System.out.println(<span style="color: #a31515">&quot;*********************************&quot;</span>);
+            System.out.println(<span style="color: #a31515">&quot;Action:&quot;</span> + subscriber.Action());
+            <span style="color: #0000ff">while</span> (subscriber.NextRow()) {
+                <span style="color: #2b91af">int</span> ordinal = 0;
+                <span style="color: #0000ff">for</span> (String column : subscriber.Columns()) {
+                    System.out.print(String.format(<span style="color: #a31515">&quot;%s:%s &quot;</span>, column, subscriber.ValueByOrdinal(ordinal)));
+                    ordinal++;
+                }
+                System.out.println(); 
+            }
+            checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>);
+        }
+        checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// UNSUBSCRIBE</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        subscriber.Execute(<span style="color: #a31515">&quot;unsubscribe from Stocks&quot;</span>);
+        checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>);
+
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+        <span style="color: #008000">// DISCONNECT</span>
+        <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+
+        client.Disconnect();
+        subscriber.Disconnect();
+    
+    }
+}
+</pre></div>
+
+
+
+	</div>
+			
+		<br clear="all" />
+	<div id="license-text">The content of this page is licensed under the Creative Commons Attribution 3.0 License. Portions of this page are modifications from work created and <a
+  href="http://code.google.com/policies.html">shared by Google</a>
+  and used according to terms described in the <a
+  href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+  3.0 Attribution License</a>. Please find the original work at <a href="http://www.golang.org">golang.org</a></div>		
+</div>
+</div>
+	
+</body>
+
+</html>
