@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-<title>PubSubSQL - Getting Started on Linux</title>
+<title>PubSubSQL - Getting started on Windows</title>
 <meta http-equiv="Content-Type" content="text/html; iso-8859-1" />
 <link href="style.css" type="text/css" rel="stylesheet" />
 </head>
@@ -66,18 +66,20 @@
 <div id="inner-content">
    <br/>
     <pre>Please ask us a question: email <a href="mailto:oleg@pubsubsql.com">oleg@pubsubsql.com</a> twitter <a href="https://twitter.com/PubSubSQL">@PubSubSQL</a> forum <a href="http://groups.google.com/group/pubsubsql">groups.google.com/group/pubsubsql</a> </pre>
-    <h1>Getting Started on Linux</h1>
+    <h1>Getting Started on Windows</h1>
 <pre># PubSubSQL distribution tree
 
 pubsubsql/
     bin/
-        pubsubsql           # server and built-in cli
-        pubsubsqlsvc        # daemon (service) installer
-        pubsubgui.jar       # interactive query java gui
+        pubsubsql.exe       # server and built-in cli
+        pubsubsqlsvc.exe    # service installer
+        pubsubsqlgui.exe    # interactive query .net gui
+        pubsubsqlgui.dll    # .net client 
     lib/
         pubsubsql.jar       # java client api
         gson-2.4.1.jar      # gson java json parser
     samples/                # sources for samples and client api 
+        dotnet/...
         go/...                   
         java/...
 </pre>
@@ -85,25 +87,24 @@ pubsubsql/
     <h3><a href="#download">Download and install the distribution</a></h3>
     <h3><a href="#test">Test your installation</a></h3>
     <h3><a href="#cli">Run command line client (CLI)</a></h3>
-    <h3><a href="#daemon">Configure and run as a daemon (service)</a></h3>
+    <h3><a href="#daemon">Configure and run as a Windows Service</a></h3>
     <h3><a href="#gui">Run Interactive Query gui</a></h3>
 
     <h5 id="download" class="blue_title">Download and install the distribution</h5>
-    <p>PubSubSQL x86 64-bit distribution: <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-linux-x64.tar.gz</a></p>
-    <p>PubSubSQL x86 32-bit distribution: <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-linux-x86.tar.gz</a></p>
-    <p>Download one of the above archives and extract it into /usr/local, creating a PubSubSQL tree in /usr/local/pubsubsql. For example: </p>
-    <pre>$ sudo tar -C /usr/local -xzf pubsubsql-v1.0.0-linux-amd64.tar.gz </pre>   
-    <p>To be able to run the server and the CLI from the command line without changing to the /usr/local/ubsubsql/bin directory, add 
-    /usr/local/pubsubsql/bin to the PATH environment variable. For example, you can do this by adding the following line to the end of your ~/.bashrc file:</p>
-    <pre># add to the end of ~/.bashrc file
-export PATH=$PATH:/usr/local/pubsubsql/bin</pre>   
-    <p>Run the following command for the changes to PATH to take effect:</p>
-    <pre>$ source ~/.bashrc</pre>   
+    <p>PubSubSQL x86 64-bit distribution: <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-windows-x64.zip</a></p>
+    <p>PubSubSQL x86 32-bit distribution: <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-windows-x86.zip</a></p>
+    <p><strong>Download one of the above zip files and extract it into C:\, creating a PubSubSQL tree in C:\pubsubsql</strong></p>
+    <p>To be able to run the server and the CLI from the command line without changing to the C:\pubsubsql\bin directory, add 
+    C:\pubsubsql\bin to the PATH environment variable.</p>
+    <p>Under Windows, you may set environment variables through the "Environment Variables" button on the 
+    "Advanced" tab of the "System" control panel. Some versions of Windows provide this control panel through 
+    the "Advanced System Settings" option inside the "System" control panel. </p>
 
     <h5 id="test" class="blue_title">Test your installation</h5>
     <p>Run the server:</p>
-<pre>$ pubsubsql
-info: 2014/02/11 18:00:00 started
+<pre>C:\pubsubsql\bin> pubsubsql.exe
+info: 2014/02/13 20:36:31 listening for incoming connections on  :7777 
+info: 2014/02/13 20:36:31 started 
 </pre>
     <p>Quit the server by typing the letter q and press enter.</p>
 <pre>q
@@ -112,52 +113,60 @@ info: 2014/02/11 18:01:00 stopped
 
     <p>By default, the server listens for incoming connections on all available network interfaces and binds to the default port:7777. 
     You may choose to specify a different port or host by using the -port and/or -ip options. For example:</p>
-<pre>$ pubsubsql -port=1234 -ip=192.168.1.1
-info: 2014/02/11 18:01:00 started
+<pre>C:\pubsubsql\bin> pubsubsql.exe -port=1234 -ip=192.168.1.1
+info: 2014/02/13 20:37:49 listening for incoming connections on  192.168.1.1:1234
+info: 2014/02/13 20:37:49 started
 </pre>
 
     <h5 id="cli" class="blue_title">Run command line client (CLI)</h5>
     <p>CLI, the command line client, is built into the pubsubsql executable. It can be used to send commands to the server. Run CLI and send a status command to the server:</p> 
-<pre>$ pubsubsql cli
+<pre>C:\pubsubsql\bin> pubsubsql.exe cli 
 pubsubsql>status
 {"status":"ok","action":"status","connections":1}
 pubsubsql>
 </pre>
 
-    <h5 id="daemon" class="blue_title">Configure and run as a daemon (service)</h5>
-    <p>If you want to deploy the PubSubSQL server, you should run the server as a linux daemon (service). Install the server as a service using the service installer included in the distribution.
-    The same -ip and -port options can be specified when installing the service. <strong>The service installer must be run as root or through sudo.</strong>
+    <h5 id="daemon" class="blue_title">Configure and run as a Windows Service</h5>
+    <p>If you want to deploy the PubSubSQL server, you should run the server as a Windows Service. Install the server as a Windows Service using the service installer included in the distribution.
+    The same -ip and -port options can be specified when installing the service. 
     </p>
 
+    <p><strong>To install the service start a command prompt as an administrator </strong><a target="_blank" href="http://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx">How to start cmd as an administrator</a></p>
+
     <p>Install the service:</p>
-    <pre>$ cd /usr/local/pubsubsql/bin 
-$ sudo ./pubsubsqlsvc install
-Installing pubsubsqld service...
-Done.
+    <pre>C:\pubsubsql\bin> pubsubsqlsvc.exe install 
+Installing PubSubSQL service...
+service PubSubSQL was installed
     </pre>
 
     <p>Uninstall the service:</p>
-    <pre>$ cd /usr/local/pubsubsql/bin 
-$ sudo ./pubsubsqlsvc uninstall
-Uninstalling pubsubsqld service...
-Done.
+    <pre>C:\pubsubsql\bin> pubsubsqlsvc.exe uninstall 
+unnstalling PubSubSQL service...
+service PubSubSQL was uninstalled
     </pre>
 
     <p>Start the service:</p>
-    <pre>$ service pubsubsqld start </pre>
+    <pre>> net start PubSubSQL
+The PubSubSQL service is starting.
+The PubSubSQL service was started successfully.
+    </pre>
 
     <p>Stop the service:</p>
-    <pre>$ service pubsubsqld stop </pre>
 
-    <p><strong>When the server runs as a service, the output is redirected to syslog.</strong></p>
+    <pre>> net stop PubSubSQL
+The PubSubSQL service is stopping.
+The PubSubSQL service was stopped successfully.
+    </pre>
+
+
+    <p><strong>When the server runs as a Window Service, the output is redirected to the Windows Event Log.</strong></p>
     
     <h5 id="gui" class="blue_title">Run PubSubSQL Interactive Query gui client</h5>	
     <p>The PubSubSQL Interactive Query gui is provided to be used to send commands to the PubSubSQL server. 
     It displays the results in a grid view as shown below. </p>
-    <p>Run the gui: </p>
-    <pre>$ java -jar /usr/local/pubsubsql/bin/pubsubsqlgui.jar</pre>
+    <p>Run the gui from windows explorer by double clicking on C:\pubsubsql\bin\pubsubsqlgui.exe </p>
 
-    <div><img border="0" src="images/javagui.png" alt="GUI"/></div>
+    <div><img border="0" src="images/netgui.png" alt="GUI"/></div>
 
 </div>
 <!-- footer -->
