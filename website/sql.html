@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>PubSubSQL - SQL </title>
+<meta http-equiv="Content-Type" content="text/html; iso-8859-1" />
+<link href="style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo"><a href="index.html"><img src="images/logo.gif" border="0" alt="Logo" /></a></div>
+		<div id="slogan">An open-source in-memory database integrated with Publish-Subscribe - Version 1.0.0</div>
+		<div id="social">
+			<a href="#"><img src="images/twitter.png" border="0" alt="Twitter" /></a>
+			<a href="#"><img src="images/youtube.png" border="0" alt="youtube" /></a>
+			<a href="#"><img src="images/git.png" border="0" alt="Git" /></a>			
+		 </div>
+	</div>
+    <div id="hmenu">
+		<ul id="main-menu">
+			<li class="first"><a href='#'>Download</a>
+				<ul class="drop-down">
+					<li><a href="#">Linux 64-bit (x86)</a></li>
+					<li><a href="#">Windows 64-bit (x86)</a></li>
+					<li><a href="#">Linux 32-bit (x86)</a></li>
+					<li><a href="#">Windows 32-bit (x86)</a></li>
+				</ul>
+            </li>
+            <li><a href="#">How To</a>
+				<ul class='drop-down'>
+					<li><a href="runlinux.html">run on Linux</a></li>
+					<li><a href="runwindows.html">run on Windows</a></li>
+				</ul>
+			</li>
+			<li><a href="#">API</a>
+				<ul class="drop-down">
+					<li><a href="apigo.html">Go</a></li>
+					<li><a href="apijava.html">Java</a></li>
+					<li><a href="apidotnet.html">.Net</a></li>
+				</ul>
+			</li>
+			<li><a href="#">SQL</a>
+				<ul class='drop-down'>
+					<li><a href="#">SQL must-know rules</a></li>
+					<li><a href="#">subscribe</a></li>
+					<li><a href="#">subscribe skip</a></li>
+					<li><a href="#">unsubscribe</a></li>
+					<li><a href="#">key</a></li>
+					<li><a href="#">tag</a></li>
+				</ul>
+			</li>
+			<li class="last-child"><a href="#">More</a>
+				<ul class='drop-down'>
+					<li><a href="license.html">License</a></li>
+					<li><a href="community.html">Community</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>	
+	<div id="containter-content">
+	<div id="inner-content">
+		<br/>
+		<pre>Please ask us a question: email <a href="mailto:oleg@pubsubsql.com">oleg@pubsubsql.com</a> twitter <a href="https://twitter.com/PubSubSQL">@PubSubSQL</a> forum <a href="http://groups.google.com/group/pubsubsql">groups.google.com/group/pubsubsql</a> </pre>
+
+		<h1 id="sql">SQL</h1>
+
+<h5 class="blue_title">SQL Must-Know Rules</h5>
+<pre>//----------------------------------------------------------------------------------------------------
+// <strong>SQL MUST-KNOW RULES</strong>
+//
+// All commands must be in lower case.
+//
+// Identifiers can only begin with alphabetic characters and may contain any alphanumeric characters.
+//
+// The only available (but optional) data definition commands are
+//    key (unique index)      - key table_name column_name
+//    tag (non-unique index)  - tag table_name column_name
+//
+// Tables and columns are auto-created when accessed.
+//
+// The underlying data type for all columns is string.
+// Strings do not have to be enclosed in single quotes as long as they have no special characters.
+// The special characters are
+//    , - comma
+//      - white space characters (space, tab, new line)
+//    ) - right parenthesis
+//    ' - single quote
+//----------------------------------------------------------------------------------------------------
+</pre>
+
+        <p>PubSubSQL implements its own simplified/enhanced flavor of SQL and has a dynamic table schema with columns auto-created on demand.</p>
+        <p>In addition to basic SQL statements such as [insert, select, update, delete], we added additonal 
+        statements <strong>[subscribe</strong>, <strong>unsubscribe</strong>] to support Publish-Subscribe functionality. </p>
+
+		<h5 class="blue_title">SQL reference and examples</h5>
+        <p><strong>We assume that the reader is familiar with basic SQL.</strong></p>
+		<h3><a href="#key">key</a></h3>
+		<h3><a href="#tag">tag</a></h3>
+		<h3><a href="#id">id column</a></h3>
+		<h3><a href="#id">where clause</a></h3>
+		<h3><a href="#insert">insert</a></h3>
+		<h3><a href="#select">select</a></h3>
+		<h3><a href="#update">update</a></h3>
+		<h3><a href="#delete">delete</a></h3>
+		<h3><a href="#subscribe">subscribe</a></h3>
+		<h3><a href="#subscribeskip">subscribe skip</a></h3>
+		<h3><a href="#unsubscribe">unsubscribe</a></h3>
+
+        <hr />
+		
+		
+		<h5 id="key" class="blue_title">key</h5>
+		The key statement defines a unique index for a given table column. If the table or the column does not exist, it will be dynamically created.
+		<pre>
+// key [table_name] [column_name]
+key Stocks Ticker </pre>
+
+		<h5 id="tag" class="blue_title">tag</h5>
+		The tag statement defines a non-unique index for a given table column. If the table or the column does not exist, it will be dynamically created.
+		<pre>
+// tag [table_name] [column_name]
+tag Stocks Sector </pre>
+
+		<h5 id="id" class="blue_title">id column</h5>
+		The <strong>id column</strong> is always auto-created with a table.
+        When a row is inserted into the table, the <strong>id column</strong> value for that row is automatically generated by the system. It is guaranteed to be unique for the given table.
+
+		<h5 id="where" class="blue_title">where clause</h5>
+        The where clause is used to filter records based on the specified criterion. 
+        <strong>Only a single column (which must be either the id column or an indexed column) can be used in the where clause. Only the equal operator (=) can be used in the where clause.</strong>
+		<pre>// where id = value
+// where key_column_name = value
+// where tag_column_name = value
+select * from Stocks where Ticker = IBM </pre> 
+
+
+		<h5 id="insert" class="blue_title">insert</h5>
+		The insert statement adds a new row to a table. If the table or the columns do not exist, they will be dynamically created.
+        <br/>
+        <br/>
+        <strong>The underlying data type for all columns is string.
+        Strings do not have to be enclosed in single quotes as long as they have no special characters. 
+        </strong><a href="#sql">Please see SQL Must-Know Rules above.</a>
+		<pre>
+// insert into [table_name] (col1, col2, col3, ...colN) values (val1, val2, val3, ...valN)
+insert into Stocks (ticker, price, sector) values (IBM, 170.54, 'TECH SECTOR') </pre>
+		
+		<h5 id="select" class="blue_title">select</h5>
+		The select statement selects data from a table and returns it as a result set. If the table or the columns do not exist, they will be dynamically created.
+		<pre>
+// select col1, col2, col3, ...colN from table_name
+// select * from table_name
+select id, ticker, price from Stocks</pre>
+   </div>
+
+	</div>
+			
+		<br clear="all" />
+	<div id="license-text">The content of this page is licensed under the Creative Commons Attribution 3.0 License. Portions of this page are modifications from work created and <a
+  href="http://code.google.com/policies.html">shared by Google</a>
+  and used according to terms described in the <a
+  href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+  3.0 Attribution License</a>. Please find the original work at <a href="http://www.golang.org">golang.org</a></div>		
+</div>
+</div>
+	
+</body>
+
+</html>

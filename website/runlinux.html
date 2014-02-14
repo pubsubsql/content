@@ -75,8 +75,8 @@ pubsubsql/
         pubsubsqlsvc        # daemon (service) installer
         pubsubgui.jar       # interactive query java gui
     lib/
-        pubsubsql.jar       # java client api
-        gson-2.4.1.jar      # gson java json parser
+        pubsubsql.jar       # client api java library
+        gson-2.4.1.jar      # third party gson java library
     samples/                # sources for samples and client api 
         go/...                   
         java/...
@@ -91,10 +91,10 @@ pubsubsql/
     <h5 id="download" class="blue_title">Download and install the distribution</h5>
     <p>PubSubSQL x86 64-bit distribution: <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-linux-x64.tar.gz</a></p>
     <p>PubSubSQL x86 32-bit distribution: <a href="http://www.pubsubsql.com">pubsubsql-v1.0.0-linux-x86.tar.gz</a></p>
-    <p>Download one of the above archives and extract it into /usr/local, creating a PubSubSQL tree in /usr/local/pubsubsql. For example: </p>
+    <p>Download one of the above archives and extract it into /usr/local, creating a PubSubSQL tree in /usr/local/pubsubsql . For example: </p>
     <pre>$ sudo tar -C /usr/local -xzf pubsubsql-v1.0.0-linux-amd64.tar.gz </pre>   
-    <p>To be able to run the server and the CLI from the command line without changing to the /usr/local/ubsubsql/bin directory, add 
-    /usr/local/pubsubsql/bin to the PATH environment variable. For example, you can do this by adding the following line to the end of your ~/.bashrc file:</p>
+    <p>To be able to run the server and the CLI from the command line without changing to the /usr/local/pubsubsql/bin directory, add 
+    /usr/local/pubsubsql/bin to the PATH environment variable. You can accomplish this by adding the following line to the end of your ~/.bashrc file:</p>
     <pre># add to the end of ~/.bashrc file
 export PATH=$PATH:/usr/local/pubsubsql/bin</pre>   
     <p>Run the following command for the changes to PATH to take effect:</p>
@@ -103,9 +103,10 @@ export PATH=$PATH:/usr/local/pubsubsql/bin</pre>
     <h5 id="test" class="blue_title">Test your installation</h5>
     <p>Run the server:</p>
 <pre>$ pubsubsql
-info: 2014/02/11 18:00:00 started
+info: 2014/02/13 20:36:31 listening for incoming connections on  :7777 
+info: 2014/02/13 20:36:31 started 
 </pre>
-    <p>Quit the server by typing the letter q and press enter.</p>
+    <p>Quit the server by typing the letter q and press enter:</p>
 <pre>q
 info: 2014/02/11 18:01:00 stopped
 </pre>
@@ -113,11 +114,13 @@ info: 2014/02/11 18:01:00 stopped
     <p>By default, the server listens for incoming connections on all available network interfaces and binds to the default port:7777. 
     You may choose to specify a different port or host by using the -port and/or -ip options. For example:</p>
 <pre>$ pubsubsql -port=1234 -ip=192.168.1.1
-info: 2014/02/11 18:01:00 started
+info: 2014/02/13 20:37:49 listening for incoming connections on  192.168.1.1:1234
+info: 2014/02/13 20:37:49 started
 </pre>
 
     <h5 id="cli" class="blue_title">Run command line client (CLI)</h5>
-    <p>CLI, the command line client, is built into the pubsubsql executable. It can be used to send commands to the server. Run CLI and send a status command to the server:</p> 
+    <p>CLI, the command line client, is built into the pubsubsql executable. It can be used to send commands to the server. </p> 
+    <p>Run CLI and send a status command to the server:</p> 
 <pre>$ pubsubsql cli
 pubsubsql>status
 {"status":"ok","action":"status","connections":1}
@@ -125,10 +128,10 @@ pubsubsql>
 </pre>
 
     <h5 id="daemon" class="blue_title">Configure and run as a daemon (service)</h5>
-    <p>If you want to deploy the PubSubSQL server, you should run the server as a linux daemon (service). Install the server as a service using the service installer included in the distribution.
-    The same -ip and -port options can be specified when installing the service. <strong>The service installer must be run as root or through sudo.</strong>
+    <p>If you want to deploy the PubSubSQL server, you should run the server as a linux daemon (service). Install the server as a service using the service installer <strong>pubsubsqlsvc</strong> included in the distribution.
+    The same -ip and -port options can be specified when installing the service. 
     </p>
-
+    <p><strong>The service installer must be run as root or through sudo.</strong></p>
     <p>Install the service:</p>
     <pre>$ cd /usr/local/pubsubsql/bin 
 $ sudo ./pubsubsqlsvc install
@@ -152,7 +155,7 @@ Done.
     <p><strong>When the server runs as a service, the output is redirected to syslog.</strong></p>
     
     <h5 id="gui" class="blue_title">Run PubSubSQL Interactive Query gui client</h5>	
-    <p>The PubSubSQL Interactive Query gui is provided to be used to send commands to the PubSubSQL server. 
+    <p>The PubSubSQL Interactive Query gui is used to execute commands against the PubSubSQL server. 
     It displays the results in a grid view as shown below. </p>
     <p>Run the gui: </p>
     <pre>$ java -jar /usr/local/pubsubsql/bin/pubsubsqlgui.jar</pre>
