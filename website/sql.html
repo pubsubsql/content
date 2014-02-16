@@ -91,15 +91,16 @@
 //----------------------------------------------------------------------------------------------------
 </pre>
 
-        <p>PubSubSQL implements its own <strong>simplified/enhanced</strong> flavor of SQL and has a dynamic table schema with columns auto-created on demand.</p>
-        <p>The response to an sql statement is returned as a result set in a <strong>JSON </strong>format. 
-        Please use "Interactive Query gui" or "CLI" provided in the downloaded distribution to experiment with different sql statements.</p>
-        <p>In addition to basic SQL statements such as [insert, select, update, delete], we added additonal 
-        statements <strong>[subscribe</strong>, <strong>unsubscribe</strong>, <strong>key</strong>, <strong>tag</strong> ...] to support Publish-Subscribe functionality. 
+        <p>PubSubSQL implements its own <strong>simplified but enhanced</strong> flavor of SQL and has a dynamic table schema with columns auto-created on demand.</p>
+        <p>The response to an SQL statement is returned as a result set in <strong>JSON </strong>format. 
+        Please use the Interactive Query GUI or Command Line Utility (CLI) provided in the downloaded distribution to experiment with different SQL statements.</p>
+        <p> We have added additonal 
+        statements <strong>[subscribe</strong>, <strong>unsubscribe</strong>, <strong>key</strong>, <strong>tag</strong>] 
+        to support Publish-Subscribe functionality. 
         </p>
 
 		<h5 class="blue_title">SQL reference and examples</h5>
-        <p><strong>We assume that the reader is familiar with basic SQL.</strong></p>
+        <p>We assume that the reader is familiar with basic SQL.</p>
 		<h3><a href="#key">key</a></h3>
 		<h3><a href="#tag">tag</a></h3>
 		<h3><a href="#id">id column</a></h3>
@@ -117,13 +118,13 @@
         <hr />
 		
 		<h5 id="key" class="blue_title">key</h5>
-		The key statement is used to define a unique index for a given table column. If the table or the column does not exist, it will be dynamically created.
+		The <strong>key</strong> statement is used to define a unique index for a given table column. If the table or the column does not exist, it will be dynamically created.
 		<pre>
 // key [table_name] [column_name]
 key Stocks Ticker </pre>
 
 		<h5 id="tag" class="blue_title">tag</h5>
-		The tag statement is used to define non-unique index for a given table column. If the table or the column does not exist, it will be dynamically created.
+		The <strong>tag</strong> statement is used to define a non-unique index for a given table column. If the table or the column does not exist, it will be dynamically created.
 		<pre>
 // tag [table_name] [column_name]
 tag Stocks Sector </pre>
@@ -134,61 +135,64 @@ tag Stocks Sector </pre>
 
 		<h5 id="pubsubid" class="blue_title">pubsubid</h5>
 		The <strong>pubsubid </strong> is a unique identifier generated and returned by the PubSubSQL server when a client subscribes to a table.
-        When the server publishes a result set to the subscribed client, pubsubid is returned as well, and can be used to uniquely identify particular subscription.
+        When the server publishes a pubsub message to the subscribed client, it also reports the pubsubid. 
+        The pubsubid can be used to uniquely identify a particular subscription.
 
 		<h5 id="action" class="blue_title">action</h5>
-		The <strong>action </strong> is returned in every result set. It is used to identifiy a type of a message returned. 
-        <strong>The action is especially usefull when processing pubsub messages to differintiate between different type of pubsub messages.</strong> 
+		An <strong>action </strong> is returned with every response or pubsub message. It is used to identify the type of message returned. 
+        <strong>The action is especially useful when processing pubsub messages to differentiate between different types of pubsub messages.</strong> 
 
 		<pre>PUBSUB ACTIONS: 
 
-insert  - new row(s) were added to a table and were subscribed to 
-add     - an existing row(s) were subscribed to 
-update  - subscribed row(s) were changed
-delete  - subscribed row(s) were deleted from a table
-remove  - an existing row(s) were changed and because of the change they no longer satisfy subscription criterion
+<strong>insert</strong> - a new row or rows were added to a table and were subscribed to 
+<strong>add</strong>    - an existing row or rows were subscribed to 
+<strong>update</strong> - a subscribed row or rows were changed
+<strong>delete</strong> - a subscribed row or rows were deleted from a table
+<strong>remove</strong> - an existing row or rows were changed, as a result of which the subscription criterion is no longer met
 		</pre> 
 
 		<h5 id="where" class="blue_title">where clause</h5>
-        The where clause is used to filter records based on the specified criterion. 
+        The <strong>where clause</strong> is used to filter records based on a specified criterion. 
         <strong>Only a single column (which must be either the id column or an indexed column) can be used in the where clause. Only the equal operator (=) can be used in the where clause.</strong>
-        <br /> The where clause can be used in [select, update, delete, subscribe and unsubscribe] statements.
+        <br /> The where clause can be used in the [select, update, delete, subscribe and unsubscribe] statements.
 		<pre>// where id = value
 // where key_column_name = value
 // where tag_column_name = value
 select * from Stocks where Ticker = IBM </pre> 
 
         <h5 id="subscribe" class="blue_title">subscribe</h5>
-		The subscribe statement is used to subscribe to data changes in a table. The sucbscribe statement returns <a href="#pubsubid">pubsubid</a> that idintifies this subscription.
+		The <strong>subscribe</strong> statement is used to subscribe to data changes in a table. 
+        The subscribe statement returns the <a href="#pubsubid">pubsubid</a> that identifies the subscription.
         If the table does not exist, it will be dynamically created.
 		<pre>
 // subscribe * from table_name
 subscribe * from Stocks where Sector = 'TECH SECOTOR'</pre>
         <br/> 
-        Once a client subscribes to a table the server starts publishing pubsub messages to the subscribed client. Each pubsub messages is returned as a result set that may contain one or more rows. 
-        The server will publish pubsub message in a response to certain <a href="#action">action (event)</a> on a particular table. 
+        Once a client subscribes to a table, the server starts publishing pubsub messages to the subscribed client. 
+        Each pubsub message is returned as a result set that may contain one or more rows. 
+        The server will publish a pubsub message in response to a certain <a href="#action">action (event)</a> on a particular table. 
         <br/>
         <br/>
 
-        <strong>The server will publish initial result set that satisfies the subscription criterion.</strong>
+        <strong>The server will publish the initial result set that satisfies the subscription criterion.</strong>
 
         <h5 id="skip" class="blue_title">subscribe skip</h5>
-        Same as subscribe statement except for the following. 
-        <strong>The server will not publish initial result set that satisfies the subscription criterion.
-        It is usifull if user wants to subscribe to new changes only, and does not care for existing state of the data.</strong>
+        The <strong>subscribe skip</strong> statement is the same as the subscribe statement except for the following:
+        <strong>The server will not publish the initial result set that satisfies the subscription criterion.
+        It is useful if the user wants to subscribe to new changes only.</strong>
 		<pre>
 // subscribe skip * from table_name
 subscribe skip * from Stocks</pre>
 
         <h5 id="unsubscribe" class="blue_title">unsubscribe</h5>
-        The unsubscribe statement is used to unsubscribe from an existing subscription(s).
+        The <strong>unsubscribe</strong> statement is used to unsubscribe from an existing subscription or subscriptions.
 		<pre>
 // unsubscribe from table_name
-unsubscribe from Stocks where pubsubid = 10
+unsubscribe from Stocks where <strong>pubsubid</strong> = 10
 unsubscribe from Stocks</pre>
 
 		<h5 id="insert" class="blue_title">insert</h5>
-		The insert statement is used to add a new row to a table. If the table or the columns do not exist, they will be dynamically created.
+		The <strong>insert </strong> statement is used to add a new row to a table. If the table or the columns do not exist, they will be dynamically created.
         <br/>
         <br/>
         <strong>The underlying data type for all columns is string.
@@ -199,20 +203,20 @@ unsubscribe from Stocks</pre>
 insert into Stocks (Ticker, Price, Sector) values (IBM, 170.54, 'TECH SECTOR') </pre>
 		
 		<h5 id="select" class="blue_title">select</h5>
-		The select statement is used to select data from a table. If the table or the columns do not exist, they will be dynamically created.
+		The <strong>select </strong> statement is used to select data from a table. If the table or the columns do not exist, they will be dynamically created.
 		<pre>
 // select col1, col2, col3, ...colN from table_name
 select * from table_name
 select id, Ticker, Price from Stocks</pre>
 
 		<h5 id="update" class="blue_title">update</h5>
-		The update statement is used to update existing rows in a table. If the table or the columns do not exist, they will be dynamically created.
+		The <strong>update </strong> statement is used to update existing rows in a table. If the table or the columns do not exist, they will be dynamically created.
 		<pre>
 // update table_name set col1 = val1, col2 = val2, col3 = val3, ...colN = valN 
 update Stocks set Price = 170 where Ticker = IBM</pre>
 
         <h5 id="delete" class="blue_title">delete</h5>
-		The delete statement is used to delete existing rows from a table. 
+		The <strong>delete </strong> statement is used to delete existing rows from a table. 
 		<pre>
 // delete from table_name 
 delete from Stocks where Ticker = BLABLA</pre>
