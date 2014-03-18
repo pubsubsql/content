@@ -42,7 +42,7 @@ var google_remarketing_only = true;
 <div id="container">
 	<div id="header">
 		<div id="logo"><a href="index.html"><img src="images/logo.gif" border="0" alt="Logo" /></a></div>
-		<div id="slogan">An open-source in-memory database integrated with Publish-Subscribe - Ver. 1.0.0 </div>
+		<div id="slogan">An open-source in-memory database integrated with Publish-Subscribe - Ver. 1.1.0 </div>
 		<div id="social">
 			<a target="_blank" href="http://groups.google.com/group/pubsubsql"><img src="images/ggroups.png" border="0" alt="Git" /></a>			
 			<a target="_blank" href="https://twitter.com/PubSubSQL"><img src="images/twitter.png" border="0" alt="Twitter" /></a>
@@ -129,93 +129,97 @@ $ go get github.com/pubsubsql/samples
 		<p>Client is a type that provides an interface to the PubSubSQL server. It can be used to send commands to and receive pubsub notifications from the server.</p>
 		<dl>
 			<dt><a href="#Client">type Client</a></dt>
-			<dd><a href="#Client.Connect">func (this *Client) Connect(address string) bool</a></dd>
-			<dd><a href="#Client.Disconnect">func (this *Client) Disconnect()</a></dd>
-			<dd><a href="#Client.Connected">func (this *Client) Connected() bool</a></dd>
-			<dd><a href="#Client.Ok">func (this *Client) Ok() bool</a></dd>
-			<dd><a href="#Client.Failed">func (this *Client) Failed() bool</a></dd>
-			<dd><a href="#Client.Error">func (this *Client) Error() string</a></dd>
-			<dd><a href="#Client.Execute">func (this *Client) Execute(command string) bool</a></dd>
-			<dd><a href="#Client.JSON">func (this *Client) JSON() string</a></dd>
-			<dd><a href="#Client.Action">func (this *Client) Action() string</a></dd>
-			<dd><a href="#Client.PubSubId">func (this *Client) PubSubId() string</a></dd>
-			<dd><a href="#Client.RowCount">func (this *Client) RowCount()</a></dd>
-			<dd><a href="#Client.NextRow">func (this *Client) NextRow() bool</a></dd>
-			<dd><a href="#Client.Value">func (this *Client) Value(column string) string</a></dd>
-			<dd><a href="#Client.ValueByOrdinal">func (this *Client) ValueByOrdinal(ordinal int) string</a></dd>
-			<dd><a href="#Client.HasColumn">func (this *Client) HasColumn(column string) bool</a></dd>
-			<dd><a href="#Client.ColumnCount">func (this *Client) ColumnCount() int</a></dd>
-			<dd><a href="#Client.Columns">func (this *Client) Columns() []string</a></dd>
-			<dd><a href="#Client.WaitForPubSub">func (this *Client) WaitForPubSub(timeout int) bool</a></dd>
+			<dd><a href="#Client.Connect">func (c *Client) Connect(address string) bool</a></dd>
+			<dd><a href="#Client.Disconnect">func (c *Client) Disconnect()</a></dd>
+			<dd><a href="#Client.Connected">func (c *Client) Connected() bool</a></dd>
+			<dd><a href="#Client.Ok">func (c *Client) Ok() bool</a></dd>
+			<dd><a href="#Client.Failed">func (c *Client) Failed() bool</a></dd>
+			<dd><a href="#Client.Error">func (c *Client) Error() string</a></dd>
+			<dd><a href="#Client.Execute">func (c *Client) Execute(command string) bool</a></dd>
+			<dd><a href="#Client.Stream">func (c *Client) Stream(command string) bool</a></dd>
+			<dd><a href="#Client.JSON">func (c *Client) JSON() string</a></dd>
+			<dd><a href="#Client.Action">func (c *Client) Action() string</a></dd>
+			<dd><a href="#Client.PubSubId">func (c *Client) PubSubId() string</a></dd>
+			<dd><a href="#Client.RowCount">func (c *Client) RowCount()</a></dd>
+			<dd><a href="#Client.NextRow">func (c *Client) NextRow() bool</a></dd>
+			<dd><a href="#Client.Value">func (c *Client) Value(column string) string</a></dd>
+			<dd><a href="#Client.ValueByOrdinal">func (c *Client) ValueByOrdinal(ordinal int) string</a></dd>
+			<dd><a href="#Client.HasColumn">func (c *Client) HasColumn(column string) bool</a></dd>
+			<dd><a href="#Client.ColumnCount">func (c *Client) ColumnCount() int</a></dd>
+			<dd><a href="#Client.Columns">func (c *Client) Columns() []string</a></dd>
+			<dd><a href="#Client.WaitForPubSub">func (c *Client) WaitForPubSub(timeout int) bool</a></dd>
 		</dl>
 		
-		<pre id="Client.Connect">func (this *Client) Connect(address string) bool</pre>
+		<pre id="Client.Connect">func (c *Client) Connect(address string) bool</pre>
 		<p>Connect connects the Client to the pubsubsql server. Address string has the form host:port.</p>
 
-		<pre id="Client.Disconnect">func (this *Client) Disconnect()</pre>
+		<pre id="Client.Disconnect">func (c *Client) Disconnect()</pre>
 		<p>Disconnect disconnects the Client from the pubsubsql server.</p>
 
-		<pre id="Client.Connected">func (this *Client) Connected() bool</pre>
+		<pre id="Client.Connected">func (c *Client) Connected() bool</pre>
 		<p>Connected returns true if the Client is currently connected to the pubsubsql server.</p>
 
-		<pre id="Client.Ok">func (this *Client) Ok() bool</pre>
+		<pre id="Client.Ok">func (c *Client) Ok() bool</pre>
 		<p>Ok determines if the last command executed against the pubsubsql server succeeded.</p>
 
-		<pre id="Client.Failed">func (this *Client) Failed() bool</pre>
+		<pre id="Client.Failed">func (c *Client) Failed() bool</pre>
 		<p>Failed determines if the last command executed against the pubsubsql server failed. </p>
 
-		<pre id="Client.Error">func (this *Client) Error() string</pre>
+		<pre id="Client.Error">func (c *Client) Error() string</pre>
 		<p>Error returns an error message when the last command executed against the pubsubsql server fails.</p>
 		<p>Functions that may generate an error are [Connect, Execute, NextRow, WaitForPubSub].</p>
 
-		<pre id="Client.Execute">func (this *Client) Execute(command string) bool</pre>
+		<pre id="Client.Execute">func (c *Client) Execute(command string) bool</pre>
 		<p>Execute executes a command against the pubsubsql server and returns true on success.</p>
 		<p>The pubsubsql server returns to the Client a response in JSON format.</p>
 
-		<pre id="Client.JSON">func (this *Client) JSON() string</pre>
+		<pre id="Client.Stream"> (c *Client) Stream(command string) bool</pre>
+		<p>Stream sends a command to the pubsubsql server and returns true on success.</p>
+		<p>The pubsubsql server does not return a response to the Client.</p>
+
+		<pre id="Client.JSON">func (c *Client) JSON() string</pre>
 		<p>JSON returns a response string in JSON format from the last command executed against 
 		the pubsubsql server.</p>
 
-		<pre id="Client.Action">func (this *Client) Action() string</pre>
+		<pre id="Client.Action">func (c *Client) Action() string</pre>
 		<p>Action returns an action string from the response returned by the last command executed 
 		against the pubsubsql server.</p>
-		<p>Valid actions are [status, insert, select, delete, update, add, remove, subscribe, unsubscribe].</p>
 
-		<pre id="Client.PubSubId">func (this *Client) PubSubId() string</pre>
+		<pre id="Client.PubSubId">func (c *Client) PubSubId() string</pre>
 		<p>PubSubId returns a unique identifier generated by the pubsubsql server when 
 		a Client subscribes to a table. If the client has subscribed to more than  one table,</p>
 		<p>PubSubId should be used by the Client to uniquely identify messages 
 		published by the pubsubsql server.</p>
 
-		<pre id="Client.RowCount">func (this *Client) RowCount() int</pre>
+		<pre id="Client.RowCount">func (c *Client) RowCount() int</pre>
 		<p>RowCount returns the number of rows in the result set returned by the pubsubsql server.</p>
 
-		<pre id="Client.NextRow">func (this *Client) NextRow() bool</pre>
+		<pre id="Client.NextRow">func (c *Client) NextRow() bool</pre>
 		<p>NextRow is used to move to the next row in the result set returned by the pubsubsql server. 
 		When called for the first time, NextRow moves to the first row in the result set.</p>
 		<p>Returns false when all rows are read or if there is an error.
 		To find out if false was returned because of an error, use Ok or Failed functions. </p>
 
-		<pre id="Client.Value">func (this *Client) Value(column string) string</pre>
+		<pre id="Client.Value">func (c *Client) Value(column string) string</pre>
 		<p>Value returns the value within the current row for the given column name.</p>
 		<p>If the column name does not exist, Value returns an empty string.</p>
 
-		<pre id="Client.ValueByOrdinal">func (this *Client) ValueByOrdinal(ordinal int) string</pre>
+		<pre id="Client.ValueByOrdinal">func (c *Client) ValueByOrdinal(ordinal int) string</pre>
 		<p>ValueByOrdinal returns the value within the current row for the given column ordinal.
 		The column ordinal represents the zero based position of the column in the Columns 
 		collection of the result set.</p>
 		<p>If the column ordinal is out of range, ValueByOrdinal returns an empty string.</p>
 
-		<pre id="Client.HasColumn" >func (this *Client) HasColumn(column string) bool</pre>
+		<pre id="Client.HasColumn" >func (c *Client) HasColumn(column string) bool</pre>
 		<p>HasColumn determines if the column name exists in the columns collection of the result set.</p>
 
-		<pre id="Client.ColumnCount">func (this *Client) ColumnCount() int</pre>
+		<pre id="Client.ColumnCount">func (c *Client) ColumnCount() int</pre>
 		<p>ColumnCount returns the number of columns in the columns collection of the result set.</p>
 
-		<pre id="Client.Columns">func (this *Client) Columns() []string</pre>
+		<pre id="Client.Columns">func (c *Client) Columns() []string</pre>
 		<p>Columns returns the column names in the columns collection of the result set.</p>
 
-		<pre id="Client.WaitForPubSub">func (this *Client) WaitForPubSub(timeout int) bool</pre>
+		<pre id="Client.WaitForPubSub">func (c *Client) WaitForPubSub(timeout int) bool</pre>
 		<p>WaitForPubSub waits until the pubsubsql server publishes a message for 
 		the subscribed Client or until the timeout interval elapses.</p>
 		<p>Returns false when timeout interval elapses or if there is an error.</br>
@@ -223,175 +227,177 @@ $ go get github.com/pubsubsql/samples
 
         <h5 id="link_quick_start" class="blue_title">Quick Start example</h5>
 
-        <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #0000ff">package</span> main
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #0000ff">package</span> main
 
 <span style="color: #0000ff">import</span> (
-    <span style="color: #a31515">&quot;fmt&quot;</span>
-    <span style="color: #a31515">&quot;github.com/pubsubsql/client&quot;</span>
+	<span style="color: #a31515">&quot;fmt&quot;</span>
+	<span style="color: #a31515">&quot;os&quot;</span>
+	<span style="color: #a31515">&quot;github.com/pubsubsql/client&quot;</span>
 )
 
 <span style="color: #008000">/* MAKE SURE TO RUN PUBSUBSQL SERVER WHEN RUNNING THE EXAMPLE */</span>
 
 <span style="color: #0000ff">func</span> checkError(client *pubsubsql.Client, str <span style="color: #2b91af">string</span>) {
-    <span style="color: #0000ff">if</span> client.Failed() {
-        fmt.Println(<span style="color: #a31515">&quot;Error:&quot;</span>, client.Error(), str)
-    }
+	<span style="color: #0000ff">if</span> client.Failed() {
+		fmt.Println(<span style="color: #a31515">&quot;Error:&quot;</span>, client.Error(), str)
+		os.Exit(1)
+	}
 }
 
 <span style="color: #0000ff">func</span> main() {
-    client := new(pubsubsql.Client)
-    subscriber := new(pubsubsql.Client)
+	client := new(pubsubsql.Client)
+	subscriber := new(pubsubsql.Client)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// CONNECT</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// CONNECT</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    address := <span style="color: #a31515">&quot;localhost:7777&quot;</span>
-    client.Connect(address)
-    checkError(client, <span style="color: #a31515">&quot;client connect failed&quot;</span>)
-    subscriber.Connect(address)
-    checkError(client, <span style="color: #a31515">&quot;subscriber connect failed&quot;</span>)
+	address := <span style="color: #a31515">&quot;localhost:7777&quot;</span>
+	client.Connect(address)
+	checkError(client, <span style="color: #a31515">&quot;client connect failed&quot;</span>)
+	subscriber.Connect(address)
+	checkError(client, <span style="color: #a31515">&quot;subscriber connect failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// SQL MUST-KNOW RULES</span>
-    <span style="color: #008000">//</span>
-    <span style="color: #008000">// All commands must be in lower case.</span>
-    <span style="color: #008000">//</span>
-    <span style="color: #008000">// Identifiers can only begin with alphabetic characters and may contain any alphanumeric characters.</span>
-    <span style="color: #008000">//</span>
-    <span style="color: #008000">// The only available (but optional) data definition commands are</span>
-    <span style="color: #008000">//    key (unique index)      - key table_name column_name</span>
-    <span style="color: #008000">//    tag (non-unique index)  - tag table_name column_name</span>
-    <span style="color: #008000">//</span>
-    <span style="color: #008000">// Tables and columns are auto-created when accessed.</span>
-    <span style="color: #008000">//</span>
-    <span style="color: #008000">// The underlying data type for all columns is string.</span>
-    <span style="color: #008000">// Strings do not have to be enclosed in single quotes as long as they have no special characters.</span>
-    <span style="color: #008000">// The special characters are</span>
-    <span style="color: #008000">//    , - comma</span>
-    <span style="color: #008000">//      - white space characters (space, tab, new line)</span>
-    <span style="color: #008000">//    ) - right parenthesis</span>
-    <span style="color: #008000">//    &#39; - single quote</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// SQL MUST-KNOW RULES</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// All commands must be in lower case.</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// Identifiers can only begin with alphabetic characters and may contain any alphanumeric characters.</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// The only available (but optional) data definition commands are</span>
+	<span style="color: #008000">//    key (unique index)      - key table_name column_name</span>
+	<span style="color: #008000">//    tag (non-unique index)  - tag table_name column_name</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// Tables and columns are auto-created when accessed.</span>
+	<span style="color: #008000">//</span>
+	<span style="color: #008000">// The underlying data type for all columns is string.</span>
+	<span style="color: #008000">// Strings do not have to be enclosed in single quotes as long as they have no special characters.</span>
+	<span style="color: #008000">// The special characters are</span>
+	<span style="color: #008000">//    , - comma</span>
+	<span style="color: #008000">//      - white space characters (space, tab, new line)</span>
+	<span style="color: #008000">//    ) - right parenthesis</span>
+	<span style="color: #008000">//    &#39; - single quote</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// INDEX</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// INDEX</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Execute(<span style="color: #a31515">&quot;key Stocks Ticker&quot;</span>)
-    client.Execute(<span style="color: #a31515">&quot;tag Stocks MarketCap&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;key Stocks Ticker&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;tag Stocks MarketCap&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// SUBSCRIBE</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// SUBSCRIBE</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    subscriber.Execute(<span style="color: #a31515">&quot;subscribe * from Stocks where MarketCap = &#39;MEGA CAP&#39;&quot;</span>)
-    pubsubid := subscriber.PubSubId()
-    fmt.Println(<span style="color: #a31515">&quot;subscribed to Stocks pubsubid:&quot;</span>, pubsubid)
-    checkError(subscriber, <span style="color: #a31515">&quot;subscribe failed&quot;</span>)
+	subscriber.Execute(<span style="color: #a31515">&quot;subscribe * from Stocks where MarketCap = &#39;MEGA CAP&#39;&quot;</span>)
+	pubsubid := subscriber.PubSubId()
+	fmt.Println(<span style="color: #a31515">&quot;subscribed to Stocks pubsubid:&quot;</span>, pubsubid)
+	checkError(subscriber, <span style="color: #a31515">&quot;subscribe failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// PUBLISH INSERT</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH INSERT</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (GOOG, &#39;1,200.22&#39;, &#39;MEGA CAP&#39;)&quot;</span>)
-    checkError(client, <span style="color: #a31515">&quot;insert GOOG failed&quot;</span>)
-    client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (MSFT, 38,&#39;MEGA CAP&#39;)&quot;</span>)
-    checkError(client, <span style="color: #a31515">&quot;insert MSFT failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (GOOG, &#39;1,200.22&#39;, &#39;MEGA CAP&#39;)&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;insert GOOG failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (MSFT, 38,&#39;MEGA CAP&#39;)&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;insert MSFT failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// SELECT</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// SELECT</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Execute(<span style="color: #a31515">&quot;select id, Ticker from Stocks&quot;</span>)
-    checkError(client, <span style="color: #a31515">&quot;select failed&quot;</span>)
-    <span style="color: #0000ff">for</span> client.NextRow() {
-        fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
-        fmt.Printf(<span style="color: #a31515">&quot;id:%s Ticker:%s \n&quot;</span>, client.Value(<span style="color: #a31515">&quot;id&quot;</span>), client.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>))
-    }
-    checkError(client, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;select id, Ticker from Stocks&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;select failed&quot;</span>)
+	<span style="color: #0000ff">for</span> client.NextRow() {
+		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
+		fmt.Printf(<span style="color: #a31515">&quot;id:%s Ticker:%s \n&quot;</span>, client.Value(<span style="color: #a31515">&quot;id&quot;</span>), client.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>))
+	}
+	checkError(client, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// PROCESS PUBLISHED INSERT</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PROCESS PUBLISHED INSERT</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    timeout := 100
-    <span style="color: #0000ff">for</span> subscriber.WaitForPubSub(timeout) {
-        fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
-        fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())
-        <span style="color: #0000ff">for</span> subscriber.NextRow() {
-            fmt.Println(<span style="color: #a31515">&quot;New MEGA CAP stock:&quot;</span>, subscriber.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>))
-            fmt.Println(<span style="color: #a31515">&quot;Price:&quot;</span>, subscriber.Value(<span style="color: #a31515">&quot;Price&quot;</span>))
-        }
-        checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
-    }
-    checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>)
+	timeout := 100
+	<span style="color: #0000ff">for</span> subscriber.WaitForPubSub(timeout) {
+		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
+		fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())
+		<span style="color: #0000ff">for</span> subscriber.NextRow() {
+			fmt.Println(<span style="color: #a31515">&quot;New MEGA CAP stock:&quot;</span>, subscriber.Value(<span style="color: #a31515">&quot;Ticker&quot;</span>))
+			fmt.Println(<span style="color: #a31515">&quot;Price:&quot;</span>, subscriber.Value(<span style="color: #a31515">&quot;Price&quot;</span>))
+		}
+		checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+	}
+	checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// PUBLISH UPDATE</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH UPDATE</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = &#39;1,500.00&#39; where Ticker = GOOG&quot;</span>)
-    checkError(client, <span style="color: #a31515">&quot;update GOOG failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = &#39;1,500.00&#39; where Ticker = GOOG&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;update GOOG failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// SERVER WILL NOT PUBLISH INSERT BECAUSE WE ONLY SUBSCRIBED TO &#39;MEGA CAP&#39;</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// SERVER WILL NOT PUBLISH INSERT BECAUSE WE ONLY SUBSCRIBED TO &#39;MEGA CAP&#39;</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (IBM, 168, &#39;LARGE CAP&#39;)&quot;</span>)
-    checkError(client, <span style="color: #a31515">&quot;insert IBM failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;insert into Stocks (Ticker, Price, MarketCap) values (IBM, 168, &#39;LARGE CAP&#39;)&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;insert IBM failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// PUBLISH ADD</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH ADD</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 230.45, MarketCap = &#39;MEGA CAP&#39; where Ticker = IBM&quot;</span>)
-    checkError(client, <span style="color: #a31515">&quot;update IBM to MEGA CAP failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 230.45, MarketCap = &#39;MEGA CAP&#39; where Ticker = IBM&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;update IBM to MEGA CAP failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// PUBLISH REMOVE</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH REMOVE</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 170, MarketCap = &#39;LARGE CAP&#39; where Ticker = IBM&quot;</span>)
-    checkError(client, <span style="color: #a31515">&quot;update IBM to LARGE CAP failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;update Stocks set Price = 170, MarketCap = &#39;LARGE CAP&#39; where Ticker = IBM&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;update IBM to LARGE CAP failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// PUBLISH DELETE</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PUBLISH DELETE</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Execute(<span style="color: #a31515">&quot;delete from Stocks&quot;</span>)
-    checkError(client, <span style="color: #a31515">&quot;delete failed&quot;</span>)
+	client.Execute(<span style="color: #a31515">&quot;delete from Stocks&quot;</span>)
+	checkError(client, <span style="color: #a31515">&quot;delete failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// PROCESS ALL PUBLISHED</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// PROCESS ALL PUBLISHED</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    <span style="color: #0000ff">for</span> subscriber.WaitForPubSub(timeout) {
-        fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
-        fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())
-        <span style="color: #0000ff">for</span> subscriber.NextRow() {
-            <span style="color: #0000ff">for</span> ordinal, column := <span style="color: #0000ff">range</span> subscriber.Columns() {
-                fmt.Printf(<span style="color: #a31515">&quot;%s:%s &quot;</span>, column, subscriber.ValueByOrdinal(ordinal))
-            }
-            fmt.Println(<span style="color: #a31515">&quot;&quot;</span>)
-        }
-        checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
-    }
-    checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>)
+	<span style="color: #0000ff">for</span> subscriber.WaitForPubSub(timeout) {
+		fmt.Println(<span style="color: #a31515">&quot;*********************************&quot;</span>)
+		fmt.Println(<span style="color: #a31515">&quot;Action:&quot;</span>, subscriber.Action())
+		<span style="color: #0000ff">for</span> subscriber.NextRow() {
+			<span style="color: #0000ff">for</span> ordinal, column := <span style="color: #0000ff">range</span> subscriber.Columns() {
+				fmt.Printf(<span style="color: #a31515">&quot;%s:%s &quot;</span>, column, subscriber.ValueByOrdinal(ordinal))
+			}
+			fmt.Println(<span style="color: #a31515">&quot;&quot;</span>)
+		}
+		checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+	}
+	checkError(subscriber, <span style="color: #a31515">&quot;WaitForPubSub failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// UNSUBSCRIBE</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// UNSUBSCRIBE</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    subscriber.Execute(<span style="color: #a31515">&quot;unsubscribe from Stocks&quot;</span>)
-    checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
+	subscriber.Execute(<span style="color: #a31515">&quot;unsubscribe from Stocks&quot;</span>)
+	checkError(subscriber, <span style="color: #a31515">&quot;NextRow failed&quot;</span>)
 
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
-    <span style="color: #008000">// DISCONNECT</span>
-    <span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
+	<span style="color: #008000">// DISCONNECT</span>
+	<span style="color: #008000">//----------------------------------------------------------------------------------------------------</span>
 
-    client.Disconnect()
-    subscriber.Disconnect()
+	client.Disconnect()
+	subscriber.Disconnect()
 }
 </pre></div>
 
