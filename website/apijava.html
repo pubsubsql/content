@@ -97,7 +97,8 @@ var google_remarketing_only = true;
 public class Sample {
     public static void main(String[] args) {
         try {
-            client.Connect(("localhost:7777");
+            pubsubsql.Client client = new pubsubsql.Client();
+            client.connect("localhost:7777");
             System.out.println("Hello PubSubSQL");
         } catch (Exception e) {
             System.out.println(e.getMessage());	
