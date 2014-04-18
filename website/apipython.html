@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>PubSubSQL - Java Client API</title>
+<meta http-equiv="Content-Type" content="text/html; iso-8859-1" />
+<link href="style.css" type="text/css" rel="stylesheet" />
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-48120758-1', 'pubsubsql.com');
+            ga('send', 'pageview');
+
+</script>
+<!-- Google Code for Remarketing tag -->
+<!-- Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. For instructions on adding this tag and more information on the above requirements, read the setup guide: google.com/ads/remarketingsetup -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 984295711;
+var google_conversion_label = "e3V2CMmfggUQn9Ks1QM";
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/984295711/?value=0&amp;label=e3V2CMmfggUQn9Ks1QM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo"><a href="index.html"><img src="images/logo.gif" border="0" alt="Logo" /></a></div>
+		<div id="slogan">An open-source in-memory database integrated with Publish-Subscribe - Ver. 1.2.0 </div>
+		<div id="social">
+			<a target="_blank" href="http://groups.google.com/group/pubsubsql"><img src="images/ggroups.png" border="0" alt="Git" /></a>			
+			<a target="_blank" href="https://twitter.com/PubSubSQL"><img src="images/twitter.png" border="0" alt="Twitter" /></a>
+			<a target="_blank" href="http://www.youtube.com/PubSubSQL"><img src="images/youtube.png" border="0" alt="youtube" /></a>
+			<a target="_blank" href="https://github.com/pubsubsql"><img src="images/git.png" border="0" alt="Git" /></a>			
+		 </div>
+	</div>
+	<div id="hmenu">
+		<ul id="main-menu">
+			<li class="first"><a href="download.html">Download</a>
+            </li>
+            <li><a href="#">How To</a>
+				<ul class="drop-down">
+					<li><a href="runlinux.html">run on Linux</a></li>
+					<li><a href="runwindows.html">run on Windows</a></li>
+				</ul>
+			</li>
+			<li><a href="#">API</a>
+				<ul class="drop-down">
+					<li><a href="apigo.html">Go</a></li>
+					<li><a href="apijava.html">Java</a></li>
+					<li><a href="apipython.html">Python</a></li>
+					<li><a href="apidotnet.html">.Net</a></li>
+				</ul>
+			</li>
+			<li><a href="sql.html">SQL</a>
+				<ul class="drop-down">
+					<li><a href="sql.html">SQL must-know rules</a></li>
+					<li><a href="sql.html#subscribe">subscribe</a></li>
+					<li><a href="sql.html#skip ">subscribe skip</a></li>
+					<li><a href="sql.html#unsubscribe">unsubscribe</a></li>
+					<li><a href="sql.html#key">key</a></li>
+					<li><a href="sql.html#tag">tag</a></li>
+				</ul>
+			</li>
+			<li class="last-child"><a href="#">More</a>
+				<ul class= "drop-down">
+					<li><a href="license.html">License</a></li>
+					<li><a href="community.html">Community</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>		
+	<div id="containter-content">
+	<div id="inner-content">
+		<br/>
+		<pre>Please ask us a question: email <a href="mailto:oleg@pubsubsql.com">oleg@pubsubsql.com</a> twitter <a href="https://twitter.com/PubSubSQL">@PubSubSQL</a> forum <a href="http://groups.google.com/group/pubsubsql">groups.google.com/group/pubsubsql</a> </pre>
+
+		<h1>Python Client API</h1>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">pubsubsql</span> <span style="color: #008000; font-weight: bold">import</span> Client
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Sample</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">main</span>(<span style="color: #008000">self</span>):
+        client <span style="color: #666666">=</span> Client()
+        <span style="color: #008000; font-weight: bold">try</span>:
+            client<span style="color: #666666">.</span>connect(<span style="color: #BA2121">&quot;localhost:7777&quot;</span>)
+            <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;Hello PubSubSQL&quot;</span>
+        <span style="color: #008000; font-weight: bold">except</span> <span style="color: #D2413A; font-weight: bold">Exception</span> <span style="color: #008000; font-weight: bold">as</span> e:
+            <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;Exception:&quot;</span>, e
+        <span style="color: #008000; font-weight: bold">finally</span>:
+            client<span style="color: #666666">.</span>disconnect()
+
+<span style="color: #008000; font-weight: bold">if</span> __name__ <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;__main__&quot;</span>:
+    Sample()<span style="color: #666666">.</span>main()
+</pre></div>
+
+		<p>PubSubSQL provides a unified client API with the same look and feel for all supported languages.</p>
+
+		<h3><a href="#install">Install</a></h3>
+		<h3><a href="#link_client">Client class reference</a></h3>	
+		<h3><a href="#link_quick_start">Quick Start example</a></h3>
+		
+		<hr/>
+		
+		<h5 id="install" class="blue_title">Install</h5>
+        <p>The PubSubSQL Python Client API is a Python package compatible with Python version 2.7 and up.</p>
+
+		<p>In order to use PubSubSQL Python Client API, you must add path of package to your project.<br/>
+        Python Client API package is a part of the download distribution. <br/>
+        It is located at <strong>DOWNLOAD_DIR\pubsubsql\samples\python\src .</strong></p>
+
+		<h5 id="link_client" class="blue_title">Client class reference</h5>
+		<p>The Client class provides an interface to the PubSubSQL server. It can be used to send commands to and receive pubsub notifications from the server.</p>
+		<dl>
+			<dt><a href="#Client">class Client</a></dt>
+			<dd><a href="#Client.Connect">def connect(self, address)</a></dd>
+			<dd><a href="#Client.Disconnect">def disconnect(self)</a></dd>
+			<dd><a href="#Client.Connected">def isConnected(self)</a></dd>
+			<dd><a href="#Client.Execute">def execute(self, command)</a></dd>
+			<dd><a href="#Client.Stream">def stream(self, command)</a></dd>
+			<dd><a href="#Client.JSON">def getJSON(self)</a></dd>
+			<dd><a href="#Client.Action">def getAction(self)</a></dd>
+			<dd><a href="#Client.PubSubId">def getPubSubId(self)</a></dd>
+			<dd><a href="#Client.RowCount">def getRowCount(self)</a></dd>
+			<dd><a href="#Client.NextRow">def nextRow(self)</a></dd>
+			<dd><a href="#Client.Value">def getValue(self, column)</a></dd>
+			<dd><a href="#Client.HasColumn">def hasColumn(self, column)</a></dd>
+			<dd><a href="#Client.ColumnCount">def getColumnCount(self)</a></dd>
+			<dd><a href="#Client.Columns">def getColumns(self)</a></dd>
+			<dd><a href="#Client.WaitForPubSub">def waitForPubSub(self, timeoutMs)</a></dd>
+		</dl>
+		
+		<pre id="Client.Connect">def connect(self, address)</pre>
+		<p>Connects the Client to the pubsubsql server. The address string has the form host:port.</p>
+
+		<pre id="Client.Disconnect">def disconnect(self)</pre>
+		<p>Disconnects the Client from the pubsubsql server.</p>
+
+		<pre id="Client.Connected">def isConnected(self)</pre>
+		<p>Returns true if the Client is currently connected to the pubsubsql server.</p>
+
+		<pre id="Client.Execute">def execute(self, command)</pre>
+		<p>Executes a command against the pubsubsql server.</p>
+		<p>The pubsubsql server returns to the Client a response in JSON format.</p>
+
+		<pre id="Client.Stream">def stream(self, command)</pre>
+		<p>Sends a command to the pubsubsql server.</p>
+		<p>The pubsubsql server does not return a response to the Client.</p>
+
+		<pre id="Client.JSON">def getJSON(self)</pre>
+		<p>Returns a response string in JSON format from the last command executed against the pubsubsql server.</p>
+
+		<pre id="Client.Action">def getAction(self)</pre>
+		<p>Returns an action string from the response returned by the last command executed against the pubsubsql server.</p>
+
+		<pre id="Client.PubSubId">def getPubSubId(self)</pre>
+		<p>Returns a unique identifier generated by the pubsubsql server when a Client subscribes to a table. 
+		If the client has subscribed to more than one table,</p>
+		<p>getPubSubId should be used by the Client to uniquely identify messages published by the pubsubsql server.</p>
+
+		<pre id="Client.RowCount">def getRowCount(self)</pre>
+		<p>Returns the number of rows in the result set returned by the pubsubsql server.</p>
+
+		<pre id="Client.NextRow">def nextRow(self)</pre>
+		<p>Move to the next row in the result set returned by the pubsubsql server. 
+		When called for the first time, NextRow moves to the first row in the result set.</p>
+		<p>Returns false when all rows are read.</p>
+
+		<pre id="Client.Value">def getValue(self, column)</pre>
+		<p>If the column name does not exist, Value returns an empty string. 
+		The column ordinal represents the zero based position of the column in the Columns collection of the result set. 
+		If the column ordinal is out of range, getValue returns an empty string.</p>
+		<p>If the column ordinal is out of range, getValue returns an empty string.</p>
+
+		<pre id="Client.HasColumn">def hasColumn(self, column)</pre>
+		<p>Determines if the column name exists in the columns collection of the result set.</p>
+
+		<pre id="Client.ColumnCount">def getColumnCount(self)</pre>
+		<p>Returns the number of columns in the columns collection of the result set.</p>
+
+		<pre id="Client.Columns">def getColumns(self)</pre>
+		<p>Returns the column names in the columns collection of the result set.</p>
+
+		<pre id="Client.WaitForPubSub">def waitForPubSub(self, timeoutMs)</pre>
+		<p>Waits until the pubsubsql server publishes a message for
+		the subscribed Client or until the timeout interval elapses.</p>
+		<p>Returns false when timeout interval elapses.</p>
+
+        <h5 id="link_quick_start" class="blue_title">Quick Start example</h5>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">pubsubsql</span> <span style="color: #008000; font-weight: bold">import</span> Client
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">QuickStart</span>:
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;MAKE SURE TO RUN PUBSUBSQL SERVER WHEN RUNNING THE EXAMPLE&quot;&quot;&quot;</span>
+    
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">quickStart</span>(<span style="color: #008000">self</span>):
+        client <span style="color: #666666">=</span> Client()
+        subscriber <span style="color: #666666">=</span> Client()
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // CONNECT</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        address <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;localhost:7777&quot;</span>
+        client<span style="color: #666666">.</span>connect(address)
+        subscriber<span style="color: #666666">.</span>connect(address);
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // SQL MUST-KNOW RULES</span>
+<span style="color: #BA2121; font-style: italic">        //</span>
+<span style="color: #BA2121; font-style: italic">        // All commands must be in lower case.</span>
+<span style="color: #BA2121; font-style: italic">        //</span>
+<span style="color: #BA2121; font-style: italic">        // Identifiers can only begin with alphabetic characters and may contain any alphanumeric characters.</span>
+<span style="color: #BA2121; font-style: italic">        //</span>
+<span style="color: #BA2121; font-style: italic">        // The only available (but optional) data definition commands are</span>
+<span style="color: #BA2121; font-style: italic">        //    key (unique index)      - key table_name column_name</span>
+<span style="color: #BA2121; font-style: italic">        //    tag (non-unique index)  - tag table_name column_name</span>
+<span style="color: #BA2121; font-style: italic">        //</span>
+<span style="color: #BA2121; font-style: italic">        // Tables and columns are auto-created when accessed.</span>
+<span style="color: #BA2121; font-style: italic">        //</span>
+<span style="color: #BA2121; font-style: italic">        // The underlying data type for all columns is String.</span>
+<span style="color: #BA2121; font-style: italic">        // Strings do not have to be enclosed in single quotes as long as they have no special characters.</span>
+<span style="color: #BA2121; font-style: italic">        // The special characters are</span>
+<span style="color: #BA2121; font-style: italic">        //    , - comma</span>
+<span style="color: #BA2121; font-style: italic">        //      - white space characters (space, tab, new line)</span>
+<span style="color: #BA2121; font-style: italic">        //    ) - right parenthesis</span>
+<span style="color: #BA2121; font-style: italic">        //    &#39; - single quote</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // INDEX</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+
+        <span style="color: #008000; font-weight: bold">try</span>:
+            client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;key Stocks Ticker&quot;</span>)
+            client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;tag Stocks MarketCap&quot;</span>)
+        <span style="color: #008000; font-weight: bold">except</span>:
+            <span style="color: #408080; font-style: italic"># key or tag may have already been defined, so its ok</span>
+            <span style="color: #008000; font-weight: bold">pass</span>
+
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // SUBSCRIBE</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+
+        subscriber<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;subscribe * from Stocks where MarketCap = &#39;MEGA CAP&#39;&quot;</span>)
+        pubsubId <span style="color: #666666">=</span> subscriber<span style="color: #666666">.</span>getPubSubId()
+        <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;subscribed to Stocks pubsubid:&quot;</span>, pubsubId
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // PUBLISH INSERT</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;insert into Stocks (Ticker, Price, MarketCap) values (GOOG, &#39;1,200.22&#39;, &#39;MEGA CAP&#39;)&quot;</span>)
+        client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;insert into Stocks (Ticker, Price, MarketCap) values (MSFT, 38,&#39;MEGA CAP&#39;)&quot;</span>)
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // SELECT</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;select id, Ticker from Stocks&quot;</span>)
+        <span style="color: #008000; font-weight: bold">while</span> client<span style="color: #666666">.</span>nextRow():
+            <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;*********************************&quot;</span>
+            <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;id:{} Ticker:{}&quot;</span><span style="color: #666666">.</span>format(client<span style="color: #666666">.</span>getValue(<span style="color: #BA2121">&quot;id&quot;</span>), client<span style="color: #666666">.</span>getValue(<span style="color: #BA2121">&quot;Ticker&quot;</span>))
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // PROCESS PUBLISHED INSERT</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        timeout <span style="color: #666666">=</span> <span style="color: #666666">100</span>
+        <span style="color: #008000; font-weight: bold">while</span> subscriber<span style="color: #666666">.</span>waitForPubSub(timeout):
+            <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;*********************************&quot;</span>
+            <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;Action:{}&quot;</span><span style="color: #666666">.</span>format(subscriber<span style="color: #666666">.</span>getAction())
+            <span style="color: #008000; font-weight: bold">while</span> subscriber<span style="color: #666666">.</span>nextRow():
+                <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;New MEGA CAP stock:{}&quot;</span><span style="color: #666666">.</span>format(subscriber<span style="color: #666666">.</span>getValue(<span style="color: #BA2121">&quot;Ticker&quot;</span>))
+                <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;Price:{}&quot;</span><span style="color: #666666">.</span>format(subscriber<span style="color: #666666">.</span>getValue(<span style="color: #BA2121">&quot;Price&quot;</span>))
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // PUBLISH UPDATE</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;update Stocks set Price = &#39;1,500.00&#39; where Ticker = GOOG&quot;</span>)
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // SERVER WILL NOT PUBLISH INSERT BECAUSE WE ONLY SUBSCRIBED TO &#39;MEGA CAP&#39;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;insert into Stocks (Ticker, Price, MarketCap) values (IBM, 168, &#39;LARGE CAP&#39;)&quot;</span>)
+
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // PUBLISH ADD</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;update Stocks set Price = 230.45, MarketCap = &#39;MEGA CAP&#39; where Ticker = IBM&quot;</span>)
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // PUBLISH REMOVE</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;update Stocks set Price = 170, MarketCap = &#39;LARGE CAP&#39; where Ticker = IBM&quot;</span>)
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // PUBLISH DELETE</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        client<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;delete from Stocks&quot;</span>)
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // PROCESS ALL PUBLISHED</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        <span style="color: #008000; font-weight: bold">while</span> subscriber<span style="color: #666666">.</span>waitForPubSub(timeout):
+            <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;*********************************&quot;</span>
+            <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;Action:{}&quot;</span><span style="color: #666666">.</span>format(subscriber<span style="color: #666666">.</span>getAction())
+            <span style="color: #008000; font-weight: bold">while</span> subscriber<span style="color: #666666">.</span>nextRow():
+                <span style="color: #008000; font-weight: bold">for</span> ordinal, column <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">enumerate</span>(subscriber<span style="color: #666666">.</span>getColumns()):
+                    <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;{}:{}&quot;</span><span style="color: #666666">.</span>format(column, subscriber<span style="color: #666666">.</span>getValue(ordinal)),
+                <span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">&quot;&quot;</span>
+                    
+        
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // UNSUBSCRIBE</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+           
+        subscriber<span style="color: #666666">.</span>execute(<span style="color: #BA2121">&quot;unsubscribe from Stocks&quot;</span>)
+                
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        // DISCONNECT</span>
+<span style="color: #BA2121; font-style: italic">        //----------------------------------------------------------------------------------------------------</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        
+        client<span style="color: #666666">.</span>disconnect()
+        subscriber<span style="color: #666666">.</span>disconnect()
+
+<span style="color: #008000; font-weight: bold">if</span> __name__ <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;__main__&quot;</span>:
+    QuickStart()<span style="color: #666666">.</span>quickStart()
+</pre></div>
+
+
+	</div>
+			
+		<br clear="all" />
+	<div id="license-text">The content of this page is licensed under the Creative Commons Attribution 3.0 License. Portions of this page are modifications from work created and <a
+  href="http://code.google.com/policies.html">shared by Google</a>
+  and used according to terms described in the <a
+  href="http://creativecommons.org/licenses/by/3.0/">Creative Commons
+  3.0 Attribution License</a>. Please find the original work at <a href="http://www.golang.org">golang.org</a></div>		
+</div>
+</div>
+	
+</body>
+
+</html>
